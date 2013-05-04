@@ -7,6 +7,8 @@ https://developers.google.com/analytics/devguides/collection/protocol/v1/
 
 Supports almost all features. 97% of lines covered by tests.
 
+All builders and payload messages are immutable.
+
 Examples
 ------
 ```java
