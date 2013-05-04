@@ -21,7 +21,7 @@ public final class Item implements Sendable {
     }
 
     public static ItemBuilderStart forTransaction(String transactionId) {
-        Limits.requireNonEmpty(transactionId);
+        Ensure.nonEmpty(transactionId);
         return new ItemBuilderStart(transactionId);
     }
 
@@ -64,17 +64,17 @@ public final class Item implements Sendable {
         }
 
         public ItemBuilder code(String code) {
-            Limits.ensureLength(500, code);
+            Ensure.length(500, code);
             return new ItemBuilder(transactionId, itemName, price, quantity, code, category, currencyCode);
         }
 
         public ItemBuilder category(String category) {
-            Limits.ensureLength(500, category);
+            Ensure.length(500, category);
             return new ItemBuilder(transactionId, itemName, price, quantity, code, category, currencyCode);
         }
 
         public ItemBuilder currencyCode(String currencyCode) {
-            Limits.ensureLength(10, currencyCode);
+            Ensure.length(10, currencyCode);
             return new ItemBuilder(transactionId, itemName, price, quantity, code, category, currencyCode);
         }
 
@@ -92,8 +92,8 @@ public final class Item implements Sendable {
         }
 
         public ItemBuilder named(String itemName) {
-            Limits.requireNonEmpty(itemName);
-            Limits.ensureLength(500, itemName);
+            Ensure.nonEmpty(itemName);
+            Ensure.length(500, itemName);
             return new ItemBuilder(transactionId, itemName);
         }
     }

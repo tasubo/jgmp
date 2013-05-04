@@ -9,7 +9,7 @@ public final class Dimension extends Custom {
     }
 
     public static DimensionBuilder withIndex(int index) {
-        Limits.ensureLessOrEqual(200, index);
+        Ensure.lessOrEqual(200, index);
         return new DimensionBuilder(index);
     }
 
@@ -26,7 +26,7 @@ public final class Dimension extends Custom {
         }
 
         public Dimension value(String value) {
-            Limits.ensureLength(150, value);
+            Ensure.length(150, value);
             return new Dimension(index, value);
         }
     }

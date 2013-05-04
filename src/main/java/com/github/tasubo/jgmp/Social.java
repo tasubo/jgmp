@@ -13,7 +13,7 @@ public final class Social implements Sendable {
     }
 
     public static SocialBuilder fromNetwork(String network) {
-        Limits.ensureLength(50, network);
+        Ensure.length(50, network);
         return new SocialBuilder(network);
     }
 
@@ -25,7 +25,7 @@ public final class Social implements Sendable {
         }
 
         public SocialBuilderAction action(String action) {
-            Limits.ensureLength(50, action);
+            Ensure.length(50, action);
             return new SocialBuilderAction(network, action);
         }
 
@@ -39,7 +39,7 @@ public final class Social implements Sendable {
             }
 
             public Social target(String target) {
-                Limits.ensureLength(2048, target);
+                Ensure.length(2048, target);
                 return new Social(network, action, target);
             }
         }

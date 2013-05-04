@@ -14,7 +14,7 @@ public final class Metric extends Custom {
     }
 
     public static MetricBuilder withIndex(int index) {
-        Limits.ensureLessOrEqual(200, index);
+        Ensure.lessOrEqual(200, index);
         return new MetricBuilder(index);
     }
 

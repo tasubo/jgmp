@@ -29,7 +29,7 @@ public final class SystemInfo implements Decorating {
         private final String flashVersion;
         private final Integer bits;
 
-        public SystemInfoBuilder(Integer srx, Integer sry, Integer vpx, Integer vpy, String encoding,
+        private SystemInfoBuilder(Integer srx, Integer sry, Integer vpx, Integer vpy, String encoding,
                                  String language, String javaEnabled, String flashVersion, Integer bits) {
             this.srx = srx;
             this.sry = sry;
@@ -63,7 +63,7 @@ public final class SystemInfo implements Decorating {
         }
 
         public SystemInfoBuilder documentEncoding(String encoding) {
-            Limits.ensureLength(20, encoding);
+            Ensure.length(20, encoding);
             return new SystemInfoBuilder(srx, sry, vpx, vpy, encoding, language, javaEnabled, flashVersion, bits);
         }
 
@@ -72,7 +72,7 @@ public final class SystemInfo implements Decorating {
         }
 
         public SystemInfoBuilder userLanguage(String language) {
-            Limits.ensureLength(20, language);
+            Ensure.length(20, language);
             return new SystemInfoBuilder(srx, sry, vpx, vpy, encoding, language, javaEnabled, flashVersion, bits);
         }
 
@@ -82,7 +82,7 @@ public final class SystemInfo implements Decorating {
         }
 
         public SystemInfoBuilder flashVersion(String flashVersion) {
-            Limits.ensureLength(20, flashVersion);
+            Ensure.length(20, flashVersion);
             return new SystemInfoBuilder(srx, sry, vpx, vpy, encoding, language, javaEnabled, flashVersion, bits);
         }
 

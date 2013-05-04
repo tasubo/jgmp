@@ -11,7 +11,7 @@ public class CacheBusterTest {
     @Test
     public void shouldAppendDifferentArgsAtTheEnd() {
         MpClient client = MpClient.withTrackingId("TRACKING")
-                .withClientId("clientId")
+                .withClientId("35009a79-1a05-49d7-b876-2b884d0f825b")
                 .withCacheBuster()
                 .httpRequester(new MockHttpRequester())
                 .create();

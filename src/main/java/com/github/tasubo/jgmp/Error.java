@@ -13,7 +13,7 @@ public final class Error implements Sendable {
     }
 
     public static ErrorBuilder withDescription(String description) {
-        Limits.ensureLength(150, description);
+        Ensure.length(150, description);
         return new ErrorBuilder(description);
     }
 

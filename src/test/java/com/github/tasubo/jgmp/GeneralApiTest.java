@@ -50,7 +50,7 @@ public class GeneralApiTest {
         Campaign campaign = prepareCampaign();
         SystemInfo systemInfo = prepareSystemInfo();
 
-        MpClient mp = MpClient.withTrackingId("").withClientId("")
+        MpClient mp = MpClient.withTrackingId("").withClientId("35009a79-1a05-49d7-b876-2b884d0f825b")
                 .httpRequester(new MockHttpRequester())
                 .using(campaign)
                 .using(systemInfo)
@@ -69,7 +69,7 @@ public class GeneralApiTest {
 
         SystemInfo systemInfo = prepareSystemInfo();
 
-        MpClient mp = MpClient.withTrackingId("").withClientId("")
+        MpClient mp = MpClient.withTrackingId("").withClientId("35009a79-1a05-49d7-b876-2b884d0f825b")
                 .httpRequester(new MockHttpRequester())
                 .using(systemInfo)
                 .using(systemInfo)
@@ -89,6 +89,13 @@ public class GeneralApiTest {
         mp.sendNonInteractive(sendable);
 
         assertThat(getRequestLog().last(), hasParam("ni").withValue("1"));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldAcceptOnlyValidUUIDForClientId() {
+        MpClient.withTrackingId("U-NN-NN")
+                .withClientId("something");
+
     }
 
 

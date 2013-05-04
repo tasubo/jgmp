@@ -59,6 +59,7 @@ public final class MpClient {
         }
 
         public MpClientBuilder withClientId(String clientId) {
+            Ensure.isUuid(clientId);
             return new MpClientBuilder(trackingId, clientId);
         }
     }

@@ -69,17 +69,17 @@ public final class Timing implements Sendable {
         }
 
         public UserTimingBuilder category(String category) {
-            Limits.ensureLength(150, category);
+            Ensure.length(150, category);
             return new UserTimingBuilder(category, variableName, label, timing);
         }
 
         public UserTimingBuilder name(String variableName) {
-            Limits.ensureLength(500, variableName);
+            Ensure.length(500, variableName);
             return new UserTimingBuilder(category, variableName, label, timing);
         }
 
         public UserTimingBuilder label(String label) {
-            Limits.ensureLength(500, label);
+            Ensure.length(500, label);
             return new UserTimingBuilder(category, variableName, label, timing);
         }
 

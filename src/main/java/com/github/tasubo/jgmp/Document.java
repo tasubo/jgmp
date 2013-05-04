@@ -39,27 +39,27 @@ public final class Document implements Decorating {
         }
 
         public DocumentBuilder location(String location) {
-            Limits.ensureLength(2048, location);
+            Ensure.length(2048, location);
             return new DocumentBuilder(location, hostname, path, title, description);
         }
 
         public DocumentBuilder hostname(String hostname) {
-            Limits.ensureLength(100, hostname);
+            Ensure.length(100, hostname);
             return new DocumentBuilder(location, hostname, path, title, description);
         }
 
         public DocumentBuilder path(String path) {
-            Limits.ensureLength(2048, path);
+            Ensure.length(2048, path);
             return new DocumentBuilder(location, hostname, path, title, description);
         }
 
         public DocumentBuilder title(String title) {
-            Limits.ensureLength(1500, title);
+            Ensure.length(1500, title);
             return new DocumentBuilder(location, hostname, path, title, description);
         }
 
         public DocumentBuilder description(String description) {
-            Limits.ensureLength(2048, description);
+            Ensure.length(2048, description);
             return new DocumentBuilder(location, hostname, path, title, description);
         }
 

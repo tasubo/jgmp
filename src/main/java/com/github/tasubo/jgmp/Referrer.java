@@ -8,7 +8,7 @@ public final class Referrer implements Decorating {
     }
 
     public static Referrer from(String source) {
-        Limits.ensureLength(2048, source);
+        Ensure.length(2048, source);
         return new Referrer(source);
     }
 

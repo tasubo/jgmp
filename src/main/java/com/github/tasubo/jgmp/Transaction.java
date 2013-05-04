@@ -20,8 +20,8 @@ public final class Transaction implements Sendable {
     }
 
     public static TransactionBuilder withId(String transactionId) {
-        Limits.ensureLength(500, transactionId);
-        Limits.requireNonEmpty(transactionId);
+        Ensure.length(500, transactionId);
+        Ensure.nonEmpty(transactionId);
         return new TransactionBuilder(transactionId);
     }
 
@@ -53,7 +53,7 @@ public final class Transaction implements Sendable {
         }
 
         public TransactionBuilder affiliation(String affiliation) {
-            Limits.ensureLength(500, affiliation);
+            Ensure.length(500, affiliation);
             return new TransactionBuilder(transactionId, affiliation, revenue, shipping, tax, currencyCode);
         }
 
@@ -70,7 +70,7 @@ public final class Transaction implements Sendable {
         }
 
         public TransactionBuilder currencyCode(String currencyCode) {
-            Limits.ensureLength(10, currencyCode);
+            Ensure.length(10, currencyCode);
             return new TransactionBuilder(transactionId, affiliation, revenue, shipping, tax, currencyCode);
         }
 

@@ -14,7 +14,7 @@ public final class App implements Decorating {
     }
 
     public static AppBuilder named(String name) {
-        Limits.ensureLength(100, name);
+        Ensure.length(100, name);
         return new AppBuilder(name);
     }
 
@@ -34,7 +34,7 @@ public final class App implements Decorating {
         }
 
         public AppBuilder version(String version) {
-            Limits.ensureLength(100, version);
+            Ensure.length(100, version);
             return new AppBuilder(name, version);
         }
 
