@@ -1,6 +1,6 @@
 package com.github.tasubo.jgmp;
 
-public class Limits {
+class Limits {
     public static void ensureLength(int length, String string) {
         if (string == null) {
             return;

@@ -45,7 +45,7 @@ public class MpClient {
     public static class MpClientBuilder {
         private String trackingId;
         private AppendingDecorator wrapperSendable = new AppendingDecorator();
-        private HttpRequester httpRequester = new JavaConnectionRequester();
+        private HttpRequester httpRequester = new JavaGetConnectionRequester();
         private String clientId;
         private boolean cacheBuster;
         private Boolean anonymizingIp;

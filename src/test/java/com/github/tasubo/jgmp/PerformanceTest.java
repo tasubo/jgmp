@@ -1,6 +1,7 @@
 package com.github.tasubo.jgmp;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static com.github.tasubo.jgmp.Mocks.*;
@@ -21,6 +22,7 @@ public class PerformanceTest {
     }
 
     @Test
+    @Ignore
     public void shouldProcessAtLeast1000HitsPerSecond() {
         int count = 1000;
         long timeStart = System.currentTimeMillis();

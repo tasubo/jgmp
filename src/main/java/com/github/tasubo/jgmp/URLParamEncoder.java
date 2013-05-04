@@ -1,6 +1,6 @@
 package com.github.tasubo.jgmp;
 
-public class URLParamEncoder {
+class URLParamEncoder {
 
     public static String encode(String input) {
         StringBuilder resultStr = new StringBuilder();

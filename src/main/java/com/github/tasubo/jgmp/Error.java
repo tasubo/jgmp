@@ -3,7 +3,7 @@ package com.github.tasubo.jgmp;
 public final class Error implements Sendable {
     private final Parametizer parametizer;
 
-    public Error(String description, Integer fatal) {
+    private Error(String description, Integer fatal) {
         this.parametizer = new Parametizer("exd", description, "exf", fatal);
     }
 
