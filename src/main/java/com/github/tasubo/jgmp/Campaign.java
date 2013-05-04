@@ -1,22 +1,21 @@
 package com.github.tasubo.jgmp;
 
-public class Campaign implements Decorating {
+public final class Campaign implements Decorating {
 
-    private String name;
-    private String source;
-    private String displayAdsId;
-    private String medium;
-    private String keyword;
-    private String content;
-    private String id;
-    private String adWordsId;
+    private final CombinedSendable combinedSendable;
 
-    private Campaign() {
+    private Campaign(CampaignBuilder b) {
+        combinedSendable = new CombinedSendable("cn", b.name,
+                "cs", b.source,
+                "cm", b.medium,
+                "ck", b.keyword,
+                "cc", b.content,
+                "ci", b.id,
+                "gclid", b.adWordsId,
+                "dclid", b.displayAdsId);
     }
 
     public Sendable with(Sendable sendable) {
-        CombinedSendable combinedSendable = new CombinedSendable("cn", name, "cs", source, "cm", medium, "ck", keyword, "cc", content,
-                "ci", id, "gclid", adWordsId, "dclid", displayAdsId);
         return combinedSendable.with(sendable);
     }
 
@@ -24,66 +23,70 @@ public class Campaign implements Decorating {
         return new CampaignBuilder(name);
     }
 
-    public static class CampaignBuilder {
+    public static final class CampaignBuilder {
 
-        private String name;
-        private String source;
-        private String displayAdsId;
-        private String medium;
-        private String keyword;
-        private String content;
-        private String id;
-        private String adWordsId;
+        private final String name;
+        private final String source;
+        private final String displayAdsId;
+        private final String medium;
+        private final String keyword;
+        private final String content;
+        private final String id;
+        private final String adWordsId;
 
         private CampaignBuilder(String name) {
             this.name = name;
+            this.source = null;
+            this.displayAdsId = null;
+            this.medium = null;
+            this.keyword = null;
+            this.content = null;
+            this.id = null;
+            this.adWordsId = null;
+        }
+
+        public CampaignBuilder(String name, String source, String displayAdsId, String medium,
+                               String keyword, String content, String id, String adWordsId) {
+            this.name = name;
+            this.source = source;
+            this.displayAdsId = displayAdsId;
+            this.medium = medium;
+            this.keyword = keyword;
+            this.content = content;
+            this.id = id;
+            this.adWordsId = adWordsId;
         }
 
         public CampaignBuilder source(String source) {
-            this.source = source;
-            return this;
+            return new CampaignBuilder(name, source, displayAdsId, medium, keyword, content, id, adWordsId);
         }
 
         public CampaignBuilder medium(String medium) {
-            this.medium = medium;
-            return this;
+            return new CampaignBuilder(name, source, displayAdsId, medium, keyword, content, id, adWordsId);
         }
 
         public CampaignBuilder keyword(String keyword) {
-            this.keyword = keyword;
-            return this;
+            return new CampaignBuilder(name, source, displayAdsId, medium, keyword, content, id, adWordsId);
         }
 
         public CampaignBuilder content(String content) {
-            this.content = content;
-            return this;
+            return new CampaignBuilder(name, source, displayAdsId, medium, keyword, content, id, adWordsId);
         }
 
         public CampaignBuilder id(String id) {
-            this.id = id;
-            return this;
+            return new CampaignBuilder(name, source, displayAdsId, medium, keyword, content, id, adWordsId);
         }
 
         public CampaignBuilder adWordsId(String adWordsId) {
-            this.adWordsId = adWordsId;
-            return this;
+            return new CampaignBuilder(name, source, displayAdsId, medium, keyword, content, id, adWordsId);
         }
 
         public CampaignBuilder displayAdsId(String displayAdsId) {
-            this.displayAdsId = displayAdsId;
-            return this;
+            return new CampaignBuilder(name, source, displayAdsId, medium, keyword, content, id, adWordsId);
         }
 
         public Campaign create() {
-            Campaign campaign = new Campaign();
-            campaign.name = name;
-            campaign.id = id;
-            campaign.source = source;
-            campaign.displayAdsId = displayAdsId;
-            campaign.medium = medium;
-            campaign.keyword = keyword;
-            campaign.content = content;
-            campaign.adWordsId = adWordsId;
+            Campaign campaign = new Campaign(this);
             return campaign;
         }
     }
