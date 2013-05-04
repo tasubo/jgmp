@@ -5,6 +5,7 @@ Java library for Google's Measurement Protocol
 
 https://developers.google.com/analytics/devguides/collection/protocol/v1/
 
+Supports almost all features. 97% of lines covered by tests.
 
 Example
 ```java
