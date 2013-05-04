@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import static com.github.tasubo.jgmp.Mocks.*;
 import static com.github.tasubo.jgmp.MpAssert.hasParam;
+import static com.github.tasubo.jgmp.MpAssert.param;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
@@ -61,6 +62,24 @@ public class GeneralApiTest {
 
         assertThat(getRequestLog().last(), hasParam("vp").withValue("800x600"));
         assertThat(getRequestLog().last(), hasParam("cn").withValue("MockCampaign"));
+    }
+
+    @Test
+    public void shouldDecorateGlobalParamsOnce() {
+
+        SystemInfo systemInfo = prepareSystemInfo();
+
+        MpClient mp = MpClient.withTrackingId("").withClientId("")
+                .httpRequester(new MockHttpRequester())
+                .using(systemInfo)
+                .using(systemInfo)
+                .create();
+
+        Sendable sendable = prepareSendable();
+        mp.send(sendable);
+
+
+        assertThat(getRequestLog().last(), param("vp").appearsOnce());
     }
 
     @Test

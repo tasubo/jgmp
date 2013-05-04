@@ -3,20 +3,15 @@ package com.github.tasubo.jgmp;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.Proxy;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-class JavaGetConnectionRequester implements HttpRequester {
+final class JavaGetConnectionRequester implements HttpRequester {
 
     private static final Logger LOGGER = Logger.getLogger(JavaGetConnectionRequester.class.getCanonicalName());
-
-    static {
-    }
 
     @Override
     public void send(final String url) {

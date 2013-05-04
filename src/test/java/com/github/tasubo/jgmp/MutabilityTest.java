@@ -1,10 +1,25 @@
 package com.github.tasubo.jgmp;
 
 import org.junit.Test;
+import org.mutabilitydetector.unittesting.MutabilityMatchers;
 
-import static org.mutabilitydetector.unittesting.MutabilityAssert.assertImmutable;
+import static org.junit.Assert.assertThat;
+import static org.mutabilitydetector.unittesting.AllowedReason.*;
+import static org.mutabilitydetector.unittesting.MutabilityAssert.*;
+import static org.mutabilitydetector.unittesting.MutabilityMatchers.*;
 
 public class MutabilityTest {
+    @Test
+    public void clientShouldBeImmutable() {
+        assertImmutable(AppendingDecorator.class);
+        assertInstancesOf(MpClient.class,
+                areImmutable(),
+                provided(HttpRequester.class).isAlsoImmutable());
+        assertInstancesOf(MpClient.MpClientBuilder.class,
+                areImmutable(),
+                provided(HttpRequester.class).isAlsoImmutable());
+    }
+
     @Test
     public void appShouldBeImmutable() {
         assertImmutable(App.class);

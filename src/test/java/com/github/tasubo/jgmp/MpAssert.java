@@ -163,7 +163,7 @@ public class MpAssert {
                         return false;
                     }
 
-                    int start = url.indexOf(paramString);
+                    int start = url.indexOf(paramString) + 1;
 
                     if (url.indexOf(paramString, start) > -1) {
                         return false;
