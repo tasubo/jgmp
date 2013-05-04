@@ -33,11 +33,6 @@ public final class App implements Decorating {
             this.version = null;
         }
 
-        public AppBuilder name(String name) {
-            Limits.ensureLength(100, name);
-            return new AppBuilder(name, version);
-        }
-
         public AppBuilder version(String version) {
             Limits.ensureLength(100, version);
             return new AppBuilder(name, version);
