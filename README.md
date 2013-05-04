@@ -47,6 +47,23 @@ MpClient mpClient = MpClient.withTrackingId("UA-40659159-1")
 mpClient.send(Timing.pageLoad(23));
 ```
 
+```java
+App app = App.named("jGMP integration test")
+        .version("0.8008")
+        .create();
+
+MpClient mpClient = MpClient.withTrackingId("UA-40659159-1")
+        .withClientId(clientId)
+        .withCacheBuster()
+        .using(app)
+        .create();
+
+Decorating referrer = Referrer.from("http://localhost/");
+UserTiming userTiming = Timing.user().name("test").time(4).create();
+
+mpClient.send(referrer.with(userTiming));
+```
+
 
 
 For more usage examples please see tests
