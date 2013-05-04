@@ -7,7 +7,8 @@ https://developers.google.com/analytics/devguides/collection/protocol/v1/
 
 Supports almost all features. 97% of lines covered by tests.
 
-Example
+Examples
+------
 ```java
 MpClient mp = MpClient.withTrackingId("UA-XXXX-Y")
                 .withClientId("35009a79-1a05-49d7-b876-2b884d0f825b")
