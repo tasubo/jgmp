@@ -1,8 +1,12 @@
 package com.github.tasubo.jgmp;
 
-public class App implements Decorating {
+public final class App implements Decorating {
 
-    private Parametizer parametizer;
+    private final Parametizer parametizer;
+
+    public App(AppBuilder b) {
+        parametizer = new Parametizer("an", b.name, "av", b.version);
+    }
 
     @Override
     public Sendable with(Sendable sendable) {
@@ -16,32 +20,31 @@ public class App implements Decorating {
 
     public static class AppBuilder {
 
-        private String name;
-        private String version;
+        private final String name;
+        private final String version;
 
-        private AppBuilder() {
-
+        private AppBuilder(String name, String version) {
+            this.name = name;
+            this.version = version;
         }
 
         private AppBuilder(String name) {
             this.name = name;
+            this.version = null;
         }
 
         public AppBuilder name(String name) {
             Limits.ensureLength(100, name);
-            this.name = name;
-            return this;
+            return new AppBuilder(name, version);
         }
 
         public AppBuilder version(String version) {
             Limits.ensureLength(100, version);
-            this.version = version;
-            return this;
+            return new AppBuilder(name, version);
         }
 
         public App create() {
-            App app = new App();
-            app.parametizer = new Parametizer("an", name, "av", version);
+            App app = new App(this);
             return app;
         }
     }

@@ -6,4 +6,10 @@ public class Limits {
             throw new IllegalArgumentException("String is too long. Should be at most " + length);
         }
     }
+
+    public static void ensureLessOrEqual(int size, int value) {
+        if (value > size) {
+            throw new IllegalArgumentException("String is too long. Should be at most " + size);
+        }
+    }
 }

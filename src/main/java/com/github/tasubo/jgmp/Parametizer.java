@@ -1,6 +1,6 @@
 package com.github.tasubo.jgmp;
 
-class Parametizer {
+final class Parametizer {
     private final String paramValue;
 
 

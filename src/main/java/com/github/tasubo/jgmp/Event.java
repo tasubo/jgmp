@@ -1,18 +1,18 @@
 package com.github.tasubo.jgmp;
 
-public class Event implements Sendable {
+public final class Event implements Sendable {
     private final String category;
     private final String label;
     private final String action;
     private final Integer value;
-    private Parametizer parametizer;
+    private final Parametizer parametizer;
 
     private Event(String category, String label, String action) {
         this.action = action;
         this.label = label;
         this.category = category;
         this.value = null;
-        fill();
+        parametizer = new Parametizer("t", "event", "ec", this.category, "ea", this.action, "el", this.label, "ev", value);
     }
 
     private Event(String category, String label, String action, int value) {
@@ -20,11 +20,7 @@ public class Event implements Sendable {
         this.label = label;
         this.action = action;
         this.value = value;
-        fill();
-    }
-
-    private void fill() {
-        parametizer = new Parametizer("t", "event", "ec", category, "ea", action, "el", label, "ev", value);
+        parametizer = new Parametizer("t", "event", "ec", this.category, "ea", this.action, "el", this.label, "ev", this.value);
     }
 
     public static EventBuilder of(String category, String label) {

@@ -1,6 +1,6 @@
 package com.github.tasubo.jgmp;
 
-class CombinedSendable {
+final class CombinedSendable {
     private final Parametizer parametizer;
 
     public CombinedSendable(Object... params) {

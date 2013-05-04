@@ -37,6 +37,12 @@
             <version>1.3</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.mutabilitydetector</groupId>
+            <artifactId>MutabilityDetector</artifactId>
+            <version>0.9</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 </project>

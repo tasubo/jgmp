@@ -1,6 +1,8 @@
 package com.github.tasubo.jgmp;
 
 
+import java.util.Random;
+
 public class MpClient {
     private String trackingId;
     private String clientId;
@@ -27,6 +29,9 @@ public class MpClient {
     }
 
     public void send(Sendable sendable) {
+        if (cacheBuster) {
+            sendable = new CacheBusterWrapper(sendable);
+        }
         Parametizer parametizer = new Parametizer("tid", trackingId, "cid", clientId, "anonymizingIp", anonymizingIp);
         Sendable with = wrapperSendable.with(sendable);
         httpRequester.send("http://www.google-analytics.com/collect?v=1" + parametizer.getText() + with.getText());
@@ -42,7 +47,7 @@ public class MpClient {
         private AppendingDecorator wrapperSendable = new AppendingDecorator();
         private HttpRequester httpRequester = new JavaConnectionRequester();
         private String clientId;
-        private Boolean cacheBuster;
+        private boolean cacheBuster;
         private Boolean anonymizingIp;
 
         private MpClientBuilder(String trackingId) {
@@ -84,6 +89,21 @@ public class MpClient {
         public MpClientBuilder httpRequester(HttpRequester httpRequester) {
             this.httpRequester = httpRequester;
             return this;
+        }
+    }
+
+    private class CacheBusterWrapper implements Sendable {
+
+        private final String text;
+
+        public CacheBusterWrapper(Sendable sendable) {
+            int token = new Random().nextInt();
+            this.text = sendable.getText() + "&z=" + token;
+        }
+
+        @Override
+        public String getText() {
+            return text;
         }
     }
 }

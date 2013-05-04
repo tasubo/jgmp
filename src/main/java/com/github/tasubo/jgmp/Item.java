@@ -28,7 +28,7 @@ public class Item implements Sendable {
             throw new UnsupportedOperationException();
         }
 
-        public ItemBuilder code(String sku47) {
+        public ItemBuilder code(String sku) {
             throw new UnsupportedOperationException();
         }
 
