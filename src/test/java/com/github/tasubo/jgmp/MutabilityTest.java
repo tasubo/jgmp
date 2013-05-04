@@ -82,4 +82,11 @@ public class MutabilityTest {
         assertImmutable(Transaction.class);
         assertImmutable(Transaction.TransactionBuilder.class);
     }
+
+    @Test
+    public void itemShouldBeImmutable() {
+        assertImmutable(Item.class);
+        assertImmutable(Item.ItemBuilder.class);
+        assertImmutable(Item.ItemBuilderStart.class);
+    }
 }

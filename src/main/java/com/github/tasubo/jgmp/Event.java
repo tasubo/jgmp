@@ -24,6 +24,8 @@ public final class Event implements Sendable {
     }
 
     public static EventBuilder of(String category, String label) {
+        Limits.ensureLength(150, category);
+        Limits.ensureLength(500, label);
         return new EventBuilder(category, label);
     }
 
@@ -43,6 +45,7 @@ public final class Event implements Sendable {
         }
 
         public Event action(String action) {
+            Limits.ensureLength(500, action);
             return new Event(category, label, action);
         }
 

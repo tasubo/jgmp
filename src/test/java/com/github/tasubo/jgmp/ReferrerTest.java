@@ -30,7 +30,7 @@ public class ReferrerTest {
         client.send(referrer.with(sendable));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldAllow2048Length() {
         MpClient client = prepareMpClient();
         Sendable sendable = prepareSendable();

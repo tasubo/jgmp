@@ -12,4 +12,10 @@ public class Limits {
             throw new IllegalArgumentException("String is too long. Should be at most " + size);
         }
     }
+
+    public static void requireNonEmpty(String itemName) {
+        if (itemName == null || itemName.isEmpty()) {
+            throw new IllegalArgumentException("Variable should not be empty");
+        }
+    }
 }

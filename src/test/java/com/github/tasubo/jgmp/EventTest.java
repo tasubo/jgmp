@@ -48,7 +48,7 @@ public class EventTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldLimitLabelLength() {
-        Event.of(stringWithLength(501), "Label");
+        Event.of("Category", stringWithLength(501));
     }
 
 }

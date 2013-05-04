@@ -1,22 +1,43 @@
 package com.github.tasubo.jgmp;
 
-public class Error implements Sendable {
+public final class Error implements Sendable {
+    private final Parametizer parametizer;
+
+    public Error(String description, Integer fatal) {
+        this.parametizer = new Parametizer("exd", description, "exf", fatal);
+    }
+
     @Override
     public String getText() {
-        throw new UnsupportedOperationException();
+        return parametizer.getText();
     }
 
     public static ErrorBuilder withDescription(String description) {
-        throw new UnsupportedOperationException();
+        Limits.ensureLength(150, description);
+        return new ErrorBuilder(description);
     }
 
-    public static class ErrorBuilder {
+    public final static class ErrorBuilder {
+        private final String description;
+        private final Integer fatal;
+
+        private ErrorBuilder(String description) {
+            this.description = description;
+            this.fatal = null;
+        }
+
+        public ErrorBuilder(String description, Integer fatal) {
+            this.description = description;
+            this.fatal = fatal;
+        }
+
         public ErrorBuilder fatal() {
-            throw new UnsupportedOperationException();
+            Integer fatal = 1;
+            return new ErrorBuilder(description, fatal);
         }
 
         public Error create() {
-            throw new UnsupportedOperationException();
+            return new Error(description, fatal);
         }
     }
 }

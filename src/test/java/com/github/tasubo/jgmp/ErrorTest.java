@@ -25,6 +25,6 @@ public class ErrorTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldLimitUserTimingLabel() {
-        Error.withDescription(stringWithLength(150));
+        Error.withDescription(stringWithLength(151));
     }
 }

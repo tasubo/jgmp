@@ -2,56 +2,99 @@ package com.github.tasubo.jgmp;
 
 import java.math.BigDecimal;
 
-public class Item implements Sendable {
-    private Item() {
+public final class Item implements Sendable {
+    private final Parametizer parametizer;
 
+    public Item(ItemBuilder b) {
+        this.parametizer = new Parametizer("ti", b.transactionId,
+                "in", b.itemName,
+                "ip", b.price,
+                "iq", b.quantity,
+                "ic", b.code,
+                "iv", b.category,
+                "cu", b.currencyCode);
     }
 
     @Override
     public String getText() {
-        throw new UnsupportedOperationException();
+        return parametizer.getText();
     }
 
-    public static ItemBuilderStart forTransaction(String od564) {
-        throw new UnsupportedOperationException();
+    public static ItemBuilderStart forTransaction(String transactionId) {
+        Limits.requireNonEmpty(transactionId);
+        return new ItemBuilderStart(transactionId);
     }
 
     public static class ItemBuilder {
-        private ItemBuilder() {
+
+        private final String transactionId;
+        private final String itemName;
+        private final BigDecimal price;
+        private final Integer quantity;
+        private final String code;
+        private final String category;
+        private final String currencyCode;
+
+        private ItemBuilder(String transactionId, String itemName) {
+            this.transactionId = transactionId;
+            this.itemName = itemName;
+            price = null;
+            quantity = null;
+            code = null;
+            category = null;
+            currencyCode = null;
         }
 
-        public ItemBuilder priced(BigDecimal bigDecimal) {
-            throw new UnsupportedOperationException();
+        private ItemBuilder(String transactionId, String itemName, BigDecimal price, Integer quantity, String code, String category, String currencyCode) {
+            this.transactionId = transactionId;
+            this.itemName = itemName;
+            this.price = price;
+            this.quantity = quantity;
+            this.code = code;
+            this.category = category;
+            this.currencyCode = currencyCode;
         }
 
-        public ItemBuilder quantity(int i) {
-            throw new UnsupportedOperationException();
+        public ItemBuilder priced(BigDecimal price) {
+            return new ItemBuilder(transactionId, itemName, price, quantity, code, category, currencyCode);
         }
 
-        public ItemBuilder code(String sku) {
-            throw new UnsupportedOperationException();
+        public ItemBuilder quantity(int quantity) {
+            return new ItemBuilder(transactionId, itemName, price, quantity, code, category, currencyCode);
         }
 
-        public ItemBuilder category(String blue) {
-            throw new UnsupportedOperationException();
+        public ItemBuilder code(String code) {
+            Limits.ensureLength(500, code);
+            return new ItemBuilder(transactionId, itemName, price, quantity, code, category, currencyCode);
         }
 
-        public ItemBuilder currencyCode(String eur) {
-            throw new UnsupportedOperationException();
+        public ItemBuilder category(String category) {
+            Limits.ensureLength(500, category);
+            return new ItemBuilder(transactionId, itemName, price, quantity, code, category, currencyCode);
+        }
+
+        public ItemBuilder currencyCode(String currencyCode) {
+            Limits.ensureLength(10, currencyCode);
+            return new ItemBuilder(transactionId, itemName, price, quantity, code, category, currencyCode);
         }
 
         public Item create() {
-            throw new UnsupportedOperationException();
+            return new Item(this);
         }
     }
 
-    public static class ItemBuilderStart {
-        private ItemBuilderStart() {
+    public final static class ItemBuilderStart {
 
+        private final String transactionId;
+
+        private ItemBuilderStart(String transactionId) {
+            this.transactionId = transactionId;
         }
 
-        public ItemBuilder named(String shoe) {
-            throw new UnsupportedOperationException();
+        public ItemBuilder named(String itemName) {
+            Limits.requireNonEmpty(itemName);
+            Limits.ensureLength(500, itemName);
+            return new ItemBuilder(transactionId, itemName);
         }
     }
 }
