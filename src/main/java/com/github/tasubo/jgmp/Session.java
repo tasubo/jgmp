@@ -1,15 +1,21 @@
 package com.github.tasubo.jgmp;
 
-public class Session implements Decorating {
+public final class Session implements Decorating {
+    private final CombinedSendable combinedSendable;
+
+    private Session(String state) {
+        this.combinedSendable = new CombinedSendable("sc", state);
+    }
+
     public static Session start() {
-        throw new UnsupportedOperationException();
+        return new Session("start");
     }
 
     public Sendable with(Sendable sendable) {
-        throw new UnsupportedOperationException();
+        return combinedSendable.with(sendable);
     }
 
     public static Session end() {
-        throw new UnsupportedOperationException();
+        return new Session("end");
     }
 }

@@ -1,6 +1,6 @@
 package com.github.tasubo.jgmp;
 
-public class SystemInfo implements Decorating {
+public final class SystemInfo implements Decorating {
 
     private final Parametizer parametizer;
 
@@ -17,56 +17,73 @@ public class SystemInfo implements Decorating {
         return new SystemInfoBuilder();
     }
 
-    public static class SystemInfoBuilder {
+    public final static class SystemInfoBuilder {
 
-        private Integer srx;
-        private Integer sry;
-        private Integer vpx;
-        private Integer vpy;
-        private String encoding;
-        private String language;
-        private String javaEnabled;
-        private String flashVersion;
-        private Integer bits;
+        private final Integer srx;
+        private final Integer sry;
+        private final Integer vpx;
+        private final Integer vpy;
+        private final String encoding;
+        private final String language;
+        private final String javaEnabled;
+        private final String flashVersion;
+        private final Integer bits;
+
+        public SystemInfoBuilder(Integer srx, Integer sry, Integer vpx, Integer vpy, String encoding,
+                                 String language, String javaEnabled, String flashVersion, Integer bits) {
+            this.srx = srx;
+            this.sry = sry;
+            this.vpx = vpx;
+            this.vpy = vpy;
+            this.encoding = encoding;
+            this.language = language;
+            this.javaEnabled = javaEnabled;
+            this.flashVersion = flashVersion;
+            this.bits = bits;
+        }
 
         private SystemInfoBuilder() {
+            srx = null;
+            sry = null;
+            vpx = null;
+            vpy = null;
+            encoding = null;
+            language = null;
+            javaEnabled = null;
+            flashVersion = null;
+            bits = null;
         }
 
-        public SystemInfoBuilder screenResolution(int x, int y) {
-            this.srx = x;
-            this.sry = y;
-            return this;
+        public SystemInfoBuilder screenResolution(int srx, int sry) {
+            return new SystemInfoBuilder(srx, sry, vpx, vpy, encoding, language, javaEnabled, flashVersion, bits);
         }
 
-        public SystemInfoBuilder viewport(int x, int y) {
-            this.vpx = x;
-            this.vpy = y;
-            return this;
+        public SystemInfoBuilder viewport(int vpx, int vpy) {
+            return new SystemInfoBuilder(srx, sry, vpx, vpy, encoding, language, javaEnabled, flashVersion, bits);
         }
 
         public SystemInfoBuilder documentEncoding(String encoding) {
-            this.encoding = encoding;
-            return this;
+            Limits.ensureLength(20, encoding);
+            return new SystemInfoBuilder(srx, sry, vpx, vpy, encoding, language, javaEnabled, flashVersion, bits);
         }
 
         public SystemInfoBuilder colorBits(int bits) {
-            this.bits = bits;
-            return this;
+            return new SystemInfoBuilder(srx, sry, vpx, vpy, encoding, language, javaEnabled, flashVersion, bits);
         }
 
         public SystemInfoBuilder userLanguage(String language) {
-            this.language = language;
-            return this;
+            Limits.ensureLength(20, language);
+            return new SystemInfoBuilder(srx, sry, vpx, vpy, encoding, language, javaEnabled, flashVersion, bits);
         }
 
         public SystemInfoBuilder javaEnabled() {
-            this.javaEnabled = "1";
-            return this;
+            String javaEnabled = "1";
+            return new SystemInfoBuilder(srx, sry, vpx, vpy, encoding, language, javaEnabled, flashVersion, bits);
         }
 
-        public SystemInfoBuilder flashVersion(String version) {
-            this.flashVersion = version;
-            return this;
+        public SystemInfoBuilder flashVersion(String flashVersion) {
+            Limits.ensureLength(20, flashVersion);
+            return new SystemInfoBuilder(srx, sry, vpx, vpy, encoding, language, javaEnabled, flashVersion, bits);
         }
 
         public SystemInfo create() {
