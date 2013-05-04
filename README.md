@@ -24,4 +24,29 @@ mp.send(event);
 
 ```
 
+```java
+App app = App.named("jGMP integration test")
+        .version("0.1337")
+        .create();
+
+SystemInfo systemInfo = SystemInfo.with()
+        .colorBits(24)
+        .screenResolution(800, 600)
+        .userLanguage("lt_LT")
+        .documentEncoding("UTF-8")
+        .javaEnabled()
+        .create();
+
+MpClient mpClient = MpClient.withTrackingId("UA-40659159-1")
+        .withClientId(clientId)
+        .withCacheBuster()
+        .using(systemInfo)
+        .using(app)
+        .create();
+
+mpClient.send(Timing.pageLoad(23));
+```
+
+
+
 For more usage examples please see tests

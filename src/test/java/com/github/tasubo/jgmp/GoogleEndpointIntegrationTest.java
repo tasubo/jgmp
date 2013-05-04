@@ -21,10 +21,7 @@ public class GoogleEndpointIntegrationTest {
 
     @Test
     public void shouldSendClientInformation() {
-
-
-        App app = App
-                .named("jGMP integration test")
+        App app = App.named("jGMP integration test")
                 .version("0.1337")
                 .create();
 
@@ -40,8 +37,9 @@ public class GoogleEndpointIntegrationTest {
                 .withClientId(clientId)
                 .withCacheBuster()
                 .using(systemInfo)
+                .using(app)
                 .create();
 
-        mpClient.send(app.with(Event.of("Test", "Integration").action("testhit")));
+        mpClient.send(Timing.pageLoad(23));
     }
 }
