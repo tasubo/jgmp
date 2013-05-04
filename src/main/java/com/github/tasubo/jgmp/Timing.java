@@ -1,62 +1,95 @@
 package com.github.tasubo.jgmp;
 
-public class Timing implements Sendable {
+public final class Timing implements Sendable {
+    private final Parametizer parametizer;
+
+    public Timing(Timing firstTiming, Timing secondTiming) {
+        parametizer = firstTiming.parametizer.and(secondTiming.parametizer);
+    }
+
     public static UserTimingBuilder user() {
-        throw new UnsupportedOperationException();
+        return new UserTimingBuilder();
+    }
+
+    private Timing(String label, int time) {
+        this.parametizer = new Parametizer(label, time);
     }
 
     @Override
     public String getText() {
-        throw new UnsupportedOperationException();
+        return parametizer.getText();
     }
 
     public static Timing pageLoad(int time) {
-        throw new UnsupportedOperationException();
+        return new Timing("plt", time);
     }
 
     public static Timing dnsLookup(int time) {
-        throw new UnsupportedOperationException();
+        return new Timing("dns", time);
     }
 
     public static Timing pageDownload(int time) {
-        throw new UnsupportedOperationException();
+        return new Timing("pdt", time);
     }
 
     public static Timing redirectResponse(int time) {
-        throw new UnsupportedOperationException();
+        return new Timing("rrt", time);
     }
 
     public static Timing tcpConnect(int time) {
-        throw new UnsupportedOperationException();
+        return new Timing("tcp", time);
     }
 
     public static Timing serverResponse(int time) {
-        throw new UnsupportedOperationException();
+        return new Timing("srt", time);
     }
 
-    public Timing and(Timing dnsLookup) {
-        throw new UnsupportedOperationException();
+    public Timing and(Timing timing) {
+        return new Timing(this, timing);
     }
 
-    public static class UserTimingBuilder {
-        public UserTimingBuilder category(String category) {
-            throw new UnsupportedOperationException();
+    public final static class UserTimingBuilder {
+        private final String category;
+        private final String variableName;
+        private final String label;
+        private final Integer timing;
+
+        private UserTimingBuilder(String category, String variableName, String label, Integer timing) {
+            this.category = category;
+            this.variableName = variableName;
+            this.label = label;
+            this.timing = timing;
         }
 
-        public UserTimingBuilder name(String lookup) {
-            throw new UnsupportedOperationException();
+        private UserTimingBuilder() {
+            this.category = null;
+            this.variableName = null;
+            this.label = null;
+            this.timing = null;
+        }
+
+        public UserTimingBuilder category(String category) {
+            Limits.ensureLength(150, category);
+            return new UserTimingBuilder(category, variableName, label, timing);
+        }
+
+        public UserTimingBuilder name(String variableName) {
+            Limits.ensureLength(500, variableName);
+            return new UserTimingBuilder(category, variableName, label, timing);
         }
 
         public UserTimingBuilder label(String label) {
-            throw new UnsupportedOperationException();
+            Limits.ensureLength(500, label);
+            return new UserTimingBuilder(category, variableName, label, timing);
         }
 
         public UserTimingBuilder time(int timing) {
-            throw new UnsupportedOperationException();
+            return new UserTimingBuilder(category, variableName, label, timing);
         }
 
         public UserTiming create() {
-            throw new UnsupportedOperationException();
+            Parametizer parametizer = new Parametizer("utc", category, "utv", variableName, "utt", timing, "utl", label);
+            return new UserTiming(parametizer);
         }
     }
 }

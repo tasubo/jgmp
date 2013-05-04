@@ -10,13 +10,12 @@ public class Campaign implements Decorating {
     private String content;
     private String id;
     private String adWordsId;
-    private CombinedSendable combinedSendable;
 
     private Campaign() {
     }
 
     public Sendable with(Sendable sendable) {
-        combinedSendable = new CombinedSendable("cn", name, "cs", source, "cm", medium, "ck", keyword, "cc", content,
+        CombinedSendable combinedSendable = new CombinedSendable("cn", name, "cs", source, "cm", medium, "ck", keyword, "cc", content,
                 "ci", id, "gclid", adWordsId, "dclid", displayAdsId);
         return combinedSendable.with(sendable);
     }

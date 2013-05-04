@@ -122,4 +122,24 @@ public class TimingTest {
         assertThat(getRequestLog().last(), hasParam("srt").withValue("500"));
         assertThat(getRequestLog().last(), hasParam("dns").withValue("43"));
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldNotHaveDuplicateTimingValues() {
+        MpClient client = prepareMpClient();
+
+        Timing dnsLookupFirst = Timing.dnsLookup(500);
+        Timing dnsLookup = Timing.dnsLookup(43);
+
+        client.send(dnsLookupFirst.and(dnsLookup));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldNotHaveDuplicateTimingValues_hierarchical() {
+        MpClient client = prepareMpClient();
+
+        Timing first = Timing.dnsLookup(500).and(Timing.pageDownload(2));
+        Timing second = Timing.dnsLookup(43).and(Timing.pageLoad(3));
+
+        client.send(first.and(second));
+    }
 }
