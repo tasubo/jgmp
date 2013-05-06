@@ -9,6 +9,16 @@ Supports almost all features. 97% of lines covered by tests.
 
 All builders and payload messages are immutable.
 
+Maven
+------
+```xml
+<dependency>
+    <groupId>com.github.tasubo</groupId>
+    <artifactId>jgmp</artifactId>
+    <version>1.0</version>
+</dependency>
+```
+
 Examples
 ------
 ```java
