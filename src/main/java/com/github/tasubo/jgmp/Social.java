@@ -4,7 +4,7 @@ public final class Social implements Sendable {
     private final Parametizer parametizer;
 
     public Social(String network, String action, String target) {
-        parametizer = new Parametizer("sn", network, "sa", action, "st", target);
+        parametizer = new Parametizer("t", "social", "sn", network, "sa", action, "st", target);
     }
 
     @Override

@@ -6,7 +6,7 @@ public final class Item implements Sendable {
     private final Parametizer parametizer;
 
     public Item(ItemBuilder b) {
-        this.parametizer = new Parametizer("ti", b.transactionId,
+        this.parametizer = new Parametizer("t", "item", "ti", b.transactionId,
                 "in", b.itemName,
                 "ip", b.price,
                 "iq", b.quantity,

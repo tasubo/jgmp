@@ -27,6 +27,17 @@ public class MutabilityTest {
     }
 
     @Test
+    public void appviewShouldBeImmutable() {
+        assertImmutable(AppView.class);
+    }
+
+    @Test
+    public void pageviewShouldBeImmutable() {
+        assertImmutable(PageView.class);
+    }
+
+
+    @Test
     public void eventShouldBeImmutable() {
         assertImmutable(Event.class);
         assertImmutable(Event.EventBuilder.class);

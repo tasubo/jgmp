@@ -31,22 +31,48 @@ final class Parametizer {
         paramValue = builder.toString();
     }
 
-    public Parametizer and(Parametizer parametizer) {
+    public Parametizer and(Parametizer parametizer, String... paramsToSkip) {
         String localParams = this.getText();
         String foreignParams = parametizer.getText();
 
-        String[] split = foreignParams.split("=");
-        for (String part : split) {
-            if (!part.startsWith("&")) {
+        String[] pairs = foreignParams.substring(1).split("&");
+        if (pairs.length % 2 != 0) {
+            throw new IllegalArgumentException("All params should have values");
+        }
+
+        StringBuilder builder = new StringBuilder();
+
+        for (int j = 0; j < pairs.length; j++) {
+            String[] pair = pairs[j].split("=");
+            String paramName = pair[0];
+            String paramValue = pair[1];
+
+            if (isInSkipList(paramName, paramsToSkip)) {
                 continue;
             }
 
-            if (localParams.contains(part)) {
+            if (localParams.contains(paramName)) {
                 throw new IllegalArgumentException("Cannot join same params - revisit parts you are combining");
+            }
+
+            builder.append("&")
+                    .append(paramName)
+                    .append("=")
+                    .append(paramValue);
+
+        }
+
+        return new Parametizer(localParams + builder.toString());
+    }
+
+    private boolean isInSkipList(String paramName, String[] paramsToSkip) {
+        for (int i = 0; i < paramsToSkip.length; i++) {
+            if (paramName.contains(paramsToSkip[i])) {
+                return true;
             }
         }
 
-        return new Parametizer(localParams + foreignParams);
+        return false;
     }
 
     private static String encode(Object param) {

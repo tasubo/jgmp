@@ -21,6 +21,7 @@ public class TimingTest {
 
         client.send(timing);
 
+        assertThat(getRequestLog().last(), hasParam("t").withValue("timing"));
         assertThat(getRequestLog().last(), hasParam("utc").withValue("category"));
         assertThat(getRequestLog().last(), hasParam("utv").withValue("lookup"));
         assertThat(getRequestLog().last(), hasParam("utt").withValue("123"));
@@ -52,6 +53,7 @@ public class TimingTest {
 
         client.send(timing);
 
+        assertThat(getRequestLog().last(), hasParam("t").withValue("timing"));
         assertThat(getRequestLog().last(), hasParam("plt").withValue("3554"));
     }
 
@@ -63,6 +65,7 @@ public class TimingTest {
 
         client.send(timing);
 
+        assertThat(getRequestLog().last(), hasParam("t").withValue("timing"));
         assertThat(getRequestLog().last(), hasParam("dns").withValue("43"));
     }
 
@@ -74,6 +77,7 @@ public class TimingTest {
 
         client.send(timing);
 
+        assertThat(getRequestLog().last(), hasParam("t").withValue("timing"));
         assertThat(getRequestLog().last(), hasParam("pdt").withValue("500"));
     }
 
@@ -85,6 +89,7 @@ public class TimingTest {
 
         client.send(timing);
 
+        assertThat(getRequestLog().last(), hasParam("t").withValue("timing"));
         assertThat(getRequestLog().last(), hasParam("rrt").withValue("500"));
     }
 
@@ -96,6 +101,7 @@ public class TimingTest {
 
         client.send(timing);
 
+        assertThat(getRequestLog().last(), hasParam("t").withValue("timing"));
         assertThat(getRequestLog().last(), hasParam("tcp").withValue("500"));
     }
 
@@ -107,6 +113,7 @@ public class TimingTest {
 
         client.send(timing);
 
+        assertThat(getRequestLog().last(), hasParam("t").withValue("timing"));
         assertThat(getRequestLog().last(), hasParam("srt").withValue("500"));
     }
 
@@ -119,6 +126,8 @@ public class TimingTest {
 
         client.send(serverResponse.and(dnsLookup));
 
+        assertThat(getRequestLog().last(), hasParam("t").withValue("timing"));
+        assertThat(getRequestLog().last(), param("t").appearsOnce());
         assertThat(getRequestLog().last(), hasParam("srt").withValue("500"));
         assertThat(getRequestLog().last(), hasParam("dns").withValue("43"));
     }

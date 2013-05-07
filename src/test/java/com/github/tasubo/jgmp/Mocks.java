@@ -60,5 +60,9 @@ public class Mocks {
 
             return requests;
         }
+
+        public void clear() {
+            REQUESTS.clear();
+        }
     }
 }

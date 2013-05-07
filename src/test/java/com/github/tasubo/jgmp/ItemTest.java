@@ -25,6 +25,7 @@ public class ItemTest {
 
         client.send(item);
 
+        assertThat(getRequestLog().last(), hasParam("t").withValue("item"));
         assertThat(getRequestLog().last(), hasParam("ti").withValue("OD564"));
         assertThat(getRequestLog().last(), hasParam("in").withValue("Shoe"));
         assertThat(getRequestLog().last(), hasParam("ip").withValue("3.50"));

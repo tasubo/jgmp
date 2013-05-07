@@ -4,7 +4,7 @@ public final class Error implements Sendable {
     private final Parametizer parametizer;
 
     private Error(String description, Integer fatal) {
-        this.parametizer = new Parametizer("exd", description, "exf", fatal);
+        this.parametizer = new Parametizer("t", "exception", "exd", description, "exf", fatal);
     }
 
     @Override

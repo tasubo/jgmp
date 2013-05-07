@@ -19,6 +19,7 @@ public class SocialTest {
 
         client.send(social);
 
+        assertThat(getRequestLog().last(), hasParam("t").withValue("social"));
         assertThat(getRequestLog().last(), hasParam("sn").withValue("facebook"));
         assertThat(getRequestLog().last(), hasParam("sa").withValue("like"));
         assertThat(getRequestLog().last(), hasParam("st").withBareValue("http%3A%2F%2Ffoo.com"));

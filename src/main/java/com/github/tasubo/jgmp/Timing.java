@@ -4,7 +4,7 @@ public final class Timing implements Sendable {
     private final Parametizer parametizer;
 
     public Timing(Timing firstTiming, Timing secondTiming) {
-        parametizer = firstTiming.parametizer.and(secondTiming.parametizer);
+        parametizer = firstTiming.parametizer.and(secondTiming.parametizer, "t");
     }
 
     public static UserTimingBuilder user() {
@@ -12,7 +12,7 @@ public final class Timing implements Sendable {
     }
 
     private Timing(String label, int time) {
-        this.parametizer = new Parametizer(label, time);
+        this.parametizer = new Parametizer("t", "timing", label, time);
     }
 
     @Override
@@ -88,7 +88,7 @@ public final class Timing implements Sendable {
         }
 
         public UserTiming create() {
-            Parametizer parametizer = new Parametizer("utc", category, "utv", variableName, "utt", timing, "utl", label);
+            Parametizer parametizer = new Parametizer("t", "timing", "utc", category, "utv", variableName, "utt", timing, "utl", label);
             return new UserTiming(parametizer);
         }
     }

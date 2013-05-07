@@ -1,5 +1,6 @@
 package com.github.tasubo.jgmp;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static com.github.tasubo.jgmp.MpAssert.*;
@@ -7,6 +8,11 @@ import static com.github.tasubo.jgmp.Mocks.*;
 import static org.junit.Assert.assertThat;
 
 public class CacheBusterTest {
+
+    @Before
+    public void beforeEachTest() {
+        getRequestLog().clear();
+    }
 
     @Test
     public void shouldAppendDifferentArgsAtTheEnd() {

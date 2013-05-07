@@ -6,7 +6,8 @@ public final class Transaction implements Sendable {
     private final Parametizer parametizer;
 
     private Transaction(TransactionBuilder b) {
-        this.parametizer = new Parametizer("ti", b.transactionId,
+        this.parametizer = new Parametizer("t", "transaction",
+                "ti", b.transactionId,
                 "ta", b.affiliation,
                 "tr", b.revenue,
                 "ts", b.shipping,

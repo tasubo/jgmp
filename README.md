@@ -22,6 +22,33 @@ Maven
 Examples
 ------
 ```java
+MpClient mpClient = MpClient.withTrackingId("UA-40659159-1")
+        .withClientId(clientId)
+        .withCacheBuster()
+        .create();
+
+App app = App.named("jGMP integration test").create();
+
+mpClient.send(app.with(AppView.hit()));
+```
+
+```java
+MpClient mpClient = MpClient.withTrackingId("UA-40659159-1")
+        .withClientId(clientId)
+        .withCacheBuster()
+        .create();
+
+Document document = Document.with()
+        .description("long document")
+        .hostname("localhost.com")
+        .path("/root")
+        .title("my document title")
+        .create();
+
+mpClient.send(document.with(PageView.hit()));
+```
+
+```java
 MpClient mp = MpClient.withTrackingId("UA-XXXX-Y")
                 .withClientId("35009a79-1a05-49d7-b876-2b884d0f825b")
                 .withCacheBuster()

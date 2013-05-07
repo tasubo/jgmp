@@ -19,6 +19,7 @@ public class ErrorTest {
         client.send(error);
 
 
+        assertThat(getRequestLog().last(), hasParam("t").withValue("exception"));
         assertThat(getRequestLog().last(), hasParam("exd").withValue("DatabaseError"));
         assertThat(getRequestLog().last(), hasParam("exf").withValue("1"));
     }

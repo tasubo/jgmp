@@ -8,6 +8,35 @@ public class GoogleEndpointIntegrationTest {
     private final String clientId = "82be3540-b4b5-11e2-9e96-0800200c9a66";
 
     @Test
+    public void firstExampleTest() {
+        MpClient mpClient = MpClient.withTrackingId("UA-40659159-1")
+                .withClientId(clientId)
+                .withCacheBuster()
+                .create();
+
+        App app = App.named("jGMP integration test").create();
+
+        mpClient.send(app.with(AppView.hit()));
+    }
+
+    @Test
+    public void secondExampleTest() {
+        MpClient mpClient = MpClient.withTrackingId("UA-40659159-1")
+                .withClientId(clientId)
+                .withCacheBuster()
+                .create();
+
+        Document document = Document.with()
+                .description("long document")
+                .hostname("localhost.com")
+                .path("/root")
+                .title("my document title")
+                .create();
+
+        mpClient.send(document.with(PageView.hit()));
+    }
+
+    @Test
     public void shouldSendHitToGoogle() {
         MpClient mpClient = MpClient.withTrackingId("UA-40659159-1")
                 .withClientId(clientId)

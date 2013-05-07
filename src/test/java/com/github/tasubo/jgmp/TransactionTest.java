@@ -25,6 +25,7 @@ public class TransactionTest {
 
         client.send(transaction);
 
+        assertThat(getRequestLog().last(), hasParam("t").withValue("transaction"));
         assertThat(getRequestLog().last(), hasParam("ti").withValue("OD564"));
         assertThat(getRequestLog().last(), hasParam("ta").withValue("Member"));
         assertThat(getRequestLog().last(), hasParam("tr").withValue("15.47"));
