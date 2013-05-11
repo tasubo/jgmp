@@ -15,90 +15,89 @@ Maven
 <dependency>
     <groupId>com.github.tasubo</groupId>
     <artifactId>jgmp</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
 </dependency>
 ```
 
 Examples
 ------
 ```java
-MpClient mpClient = MpClient.withTrackingId("UA-40659159-1")
-        .withClientId(clientId)
-        .withCacheBuster()
-        .create();
-
-App app = App.named("jGMP integration test").create();
-
-mpClient.send(app.with(AppView.hit()));
-```
-
-```java
-MpClient mpClient = MpClient.withTrackingId("UA-40659159-1")
-        .withClientId(clientId)
-        .withCacheBuster()
-        .create();
-
-Document document = Document.with()
-        .description("long document")
-        .hostname("localhost.com")
-        .path("/root")
-        .title("my document title")
-        .create();
-
-mpClient.send(document.with(PageView.hit()));
-```
-
-```java
-MpClient mp = MpClient.withTrackingId("UA-XXXX-Y")
-                .withClientId("35009a79-1a05-49d7-b876-2b884d0f825b")
+        MpClient mpClient = MpClient.withTrackingId("UA-40659159-1")
+                .withClientId(clientId)
                 .withCacheBuster()
-                .anonymizingIp()
                 .create();
 
-Event event = Event.of("Category", "Label").action("Action");
+        App app = App.named("jGMP integration test").create();
 
-mp.send(event);
+        mpClient.send(AppView.hit().with(app));
+```
+
+```java
+        MpClient mpClient = MpClient.withTrackingId("UA-40659159-1")
+                .withClientId(clientId)
+                .withCacheBuster()
+                .create();
+
+        Document document = Document.with()
+                .description("long document")
+                .hostname("localhost.com")
+                .path("/root")
+                .title("my document title")
+                .create();
+
+        mpClient.send(PageView.hit().with(document));
+```
+
+```java
+        MpClient mpClient = MpClient.withTrackingId("UA-40659159-1")
+                .withClientId(clientId)
+                .withCacheBuster()
+                .create();
+
+        App app = App.named("jGMP integration test").create();
+
+        mpClient.send(Event.of("Test", "Integration").action("testhit").with(app));
 
 ```
 
 ```java
-App app = App.named("jGMP integration test")
-        .version("0.1337")
-        .create();
+        App app = App.named("jGMP integration test")
+                .version("0.1337")
+                .create();
 
-SystemInfo systemInfo = SystemInfo.with()
-        .colorBits(24)
-        .screenResolution(800, 600)
-        .userLanguage("lt_LT")
-        .documentEncoding("UTF-8")
-        .javaEnabled()
-        .create();
+        SystemInfo systemInfo = SystemInfo.with()
+                .colorBits(24)
+                .screenResolution(800, 600)
+                .userLanguage("lt_LT")
+                .documentEncoding("UTF-8")
+                .javaEnabled()
+                .create();
 
-MpClient mpClient = MpClient.withTrackingId("UA-40659159-1")
-        .withClientId(clientId)
-        .withCacheBuster()
-        .using(systemInfo)
-        .using(app)
-        .create();
+        MpClient mpClient = MpClient.withTrackingId("UA-40659159-1")
+                .withClientId(clientId)
+                .withCacheBuster()
+                .using(systemInfo)
+                .using(app)
+                .create();
 
-mpClient.send(Timing.pageLoad(23));
+        mpClient.send(Timing.pageLoad(23));
 ```
 
 ```java
-App app = App.named("jGMP integration test")
-        .version("0.8008")
-        .create();
+        App app = App.named("jGMP integration test")
+                .version("0.8008")
+                .create();
 
-MpClient mpClient = MpClient.withTrackingId("UA-40659159-1")
-        .withClientId(clientId)
-        .withCacheBuster()
-        .using(app)
-        .create();
+        MpClient mpClient = MpClient.withTrackingId("UA-40659159-1")
+                .withClientId(clientId)
+                .withCacheBuster()
+                .using(app)
+                .create();
 
-Decorating referrer = Referrer.from("http://localhost/");
-UserTiming userTiming = Timing.user().name("test").time(4).create();
+        Decorating referrer = Referrer.from("http://localhost/");
+        UserTiming userTiming = Timing.user().name("test").time(4).create();
 
-mpClient.send(referrer.with(userTiming));
+        mpClient.send(userTiming.with(referrer));
 ```
 
 
