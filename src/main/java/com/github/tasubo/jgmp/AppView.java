@@ -12,6 +12,11 @@ public final class AppView implements Sendable {
         return parametizer.getText();
     }
 
+    @Override
+    public Sendable with(Decorating app) {
+        return new Combine(this).with(app);
+    }
+
     public static AppView hit() {
         return new AppView();
     }

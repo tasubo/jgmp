@@ -12,6 +12,11 @@ public final class Error implements Sendable {
         return parametizer.getText();
     }
 
+    @Override
+    public Sendable with(Decorating app) {
+        return new Combine(this).with(app);
+    }
+
     public static ErrorBuilder withDescription(String description) {
         Ensure.length(150, description);
         return new ErrorBuilder(description);

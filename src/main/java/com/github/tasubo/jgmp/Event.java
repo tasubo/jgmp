@@ -34,6 +34,11 @@ public final class Event implements Sendable {
         return parametizer.getText();
     }
 
+    @Override
+    public Sendable with(Decorating app) {
+        return new Combine(this).with(app);
+    }
+
 
     public static class EventBuilder {
         private final String category;

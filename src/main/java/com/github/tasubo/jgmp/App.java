@@ -4,18 +4,18 @@ public final class App implements Decorating {
 
     private final Parametizer parametizer;
 
-    public App(AppBuilder b) {
+    private App(AppBuilder b) {
         parametizer = new Parametizer("an", b.name, "av", b.version);
-    }
-
-    @Override
-    public Sendable with(Sendable sendable) {
-        return new CombinedSendable(parametizer).with(sendable);
     }
 
     public static AppBuilder named(String name) {
         Ensure.length(100, name);
         return new AppBuilder(name);
+    }
+
+    @Override
+    public String getPart() {
+        return parametizer.getText();
     }
 
     public static class AppBuilder {

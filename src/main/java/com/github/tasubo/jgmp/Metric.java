@@ -2,20 +2,20 @@ package com.github.tasubo.jgmp;
 
 public final class Metric extends Custom {
 
-    private final CombinedSendable combinedSendable;
+    private final Parametizer parametizer;
 
     public Metric(int index, int value) {
-        this.combinedSendable = new CombinedSendable("cm" + index, value);
-    }
-
-    @Override
-    public Sendable with(Sendable sendable) {
-        return combinedSendable.with(sendable);
+        this.parametizer = new Parametizer("cm" + index, value);
     }
 
     public static MetricBuilder withIndex(int index) {
         Ensure.lessOrEqual(200, index);
         return new MetricBuilder(index);
+    }
+
+    @Override
+    public String getPart() {
+        return parametizer.getText();
     }
 
     public final static class MetricBuilder {

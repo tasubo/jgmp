@@ -20,6 +20,11 @@ public final class Item implements Sendable {
         return parametizer.getText();
     }
 
+    @Override
+    public Sendable with(Decorating app) {
+        return new Combine(this).with(app);
+    }
+
     public static ItemBuilderStart forTransaction(String transactionId) {
         Ensure.nonEmpty(transactionId);
         return new ItemBuilderStart(transactionId);

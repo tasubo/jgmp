@@ -86,7 +86,7 @@ public class GeneralApiTest {
     public void shouldSendNonInteractive() {
         MpClient mp = prepareMpClient();
         Sendable sendable = prepareSendable();
-        mp.sendNonInteractive(sendable);
+        mp.send(sendable.with(NonInteractive.hit()));
 
         assertThat(getRequestLog().last(), hasParam("ni").withValue("1"));
     }

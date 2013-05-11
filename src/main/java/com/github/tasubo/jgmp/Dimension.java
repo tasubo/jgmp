@@ -2,10 +2,10 @@ package com.github.tasubo.jgmp;
 
 public final class Dimension extends Custom {
 
-    private final CombinedSendable combinedSendable;
+    private final Parametizer parametizer;
 
-    public Dimension(int index, String value) {
-        this.combinedSendable = new CombinedSendable("cd" + index, value);
+    private Dimension(int index, String value) {
+        this.parametizer = new Parametizer("cd" + index, value);
     }
 
     public static DimensionBuilder withIndex(int index) {
@@ -14,15 +14,15 @@ public final class Dimension extends Custom {
     }
 
     @Override
-    public Sendable with(Sendable sendable) {
-        return combinedSendable.with(sendable);
+    public String getPart() {
+        return parametizer.getText();
     }
 
     public final static class DimensionBuilder {
         private final int index;
 
         public DimensionBuilder(int index) {
-            this.index =index;
+            this.index = index;
         }
 
         public Dimension value(String value) {

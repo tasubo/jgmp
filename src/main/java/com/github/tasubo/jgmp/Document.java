@@ -7,8 +7,9 @@ public final class Document implements Decorating {
         this.parametizer = parametizer;
     }
 
-    public Sendable with(Sendable sendable) {
-        return new CombinedSendable(parametizer).with(sendable);
+    @Override
+    public String getPart() {
+        return parametizer.getText();
     }
 
     public static DocumentBuilder with() {

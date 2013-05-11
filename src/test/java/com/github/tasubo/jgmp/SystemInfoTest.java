@@ -25,7 +25,7 @@ public class SystemInfoTest {
                 .flashVersion("10 1 r103")
                 .create();
 
-        mpClient.send(systemInfo.with(sendable));
+        mpClient.send(sendable.with(systemInfo));
 
         assertThat(getRequestLog().last(), hasParam("ec").withValue("Category"));
 
@@ -51,7 +51,7 @@ public class SystemInfoTest {
                 .flashVersion("10 1 r103")
                 .create();
 
-        mpClient.send(systemInfo.with(sendable));
+        mpClient.send(sendable.with(systemInfo));
 
         assertThat(getRequestLog().last(), hasParam("ec").withValue("Category"));
 

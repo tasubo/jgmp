@@ -12,6 +12,11 @@ public final class Social implements Sendable {
         return parametizer.getText();
     }
 
+    @Override
+    public Sendable with(Decorating app) {
+        return new Combine(this).with(app);
+    }
+
     public static SocialBuilder fromNetwork(String network) {
         Ensure.length(50, network);
         return new SocialBuilder(network);

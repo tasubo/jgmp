@@ -12,4 +12,9 @@ public final class UserTiming implements Sendable {
     public String getText() {
         return parametizer.getText();
     }
+
+    @Override
+    public Sendable with(Decorating app) {
+        return new Combine(this).with(app);
+    }
 }

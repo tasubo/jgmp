@@ -1,10 +1,10 @@
 package com.github.tasubo.jgmp;
 
 public final class Referrer implements Decorating {
-    private final CombinedSendable combinedSendable;
+    private final Parametizer parametizer;
 
-    public Referrer(String source) {
-        this.combinedSendable = new CombinedSendable("dr", source);
+    private Referrer(String source) {
+        this.parametizer = new Parametizer("dr", source);
     }
 
     public static Referrer from(String source) {
@@ -12,7 +12,8 @@ public final class Referrer implements Decorating {
         return new Referrer(source);
     }
 
-    public Sendable with(Sendable sendable) {
-        return combinedSendable.with(sendable);
+    @Override
+    public String getPart() {
+        return parametizer.getText();
     }
 }

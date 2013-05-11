@@ -20,35 +20,17 @@ public final class MpClient {
         this.appendingDecorator = b.appendingDecorator;
     }
 
-    private class NonInteractiveDecorator implements Sendable {
-        private final Sendable sendable;
-
-        public NonInteractiveDecorator(Sendable sendable) {
-            this.sendable = sendable;
-        }
-
-        @Override
-        public String getText() {
-            return "&ni=1" + sendable.toString();
-        }
-    }
-
     public static MpClientBuilderStart withTrackingId(String trackingId) {
         return new MpClientBuilderStart(trackingId);
     }
 
     public void send(Sendable sendable) {
         if (cacheBuster) {
-            sendable = new CacheBusterWrapper(sendable);
+            sendable = sendable.with(new CacheBuster());
         }
         Parametizer parametizer = new Parametizer("tid", trackingId, "cid", clientId, "anonymizingIp", anonymizingIp);
-        Sendable with = appendingDecorator.with(sendable);
+        Sendable with = sendable.with(appendingDecorator);
         httpRequester.send("http://www.google-analytics.com/collect?v=1" + parametizer.getText() + with.getText());
-    }
-
-    public void sendNonInteractive(Sendable sendable) {
-        Sendable niSendable = new NonInteractiveDecorator(sendable);
-        send(niSendable);
     }
 
     public static final class MpClientBuilderStart {
@@ -115,17 +97,17 @@ public final class MpClient {
         }
     }
 
-    private class CacheBusterWrapper implements Sendable {
+    private class CacheBuster implements Decorating {
 
         private final String text;
 
-        public CacheBusterWrapper(Sendable sendable) {
+        public CacheBuster() {
             int token = new Random().nextInt();
-            this.text = sendable.getText() + "&z=" + token;
+            this.text = "&z=" + token;
         }
 
         @Override
-        public String getText() {
+        public String getPart() {
             return text;
         }
     }

@@ -21,7 +21,7 @@ public class DocumentTest {
                 .description("High Scores")
                 .create();
 
-        mp.send(document.with(sendable));
+        mp.send(sendable.with(document));
 
 
         assertThat(getRequestLog().last(), hasParam("dl").withBareValue("http%3A%2F%2Ffoo.com%2Fhome%3Fa%3Db"));

@@ -13,8 +13,8 @@ final class AppendingDecorator implements Decorating {
     AppendingDecorator(AppendingDecorator appendingDecorator, Decorating decorating) {
         String classNameEntry = decorating.getClass().getCanonicalName() + ";";
         if (!appendingDecorator.decoratorsList.contains(classNameEntry)) {
-            Sendable with = decorating.with(NullSendable.VALUE);
-            appending = appendingDecorator.appending + with.getText();
+            String with = decorating.getPart();
+            appending = appendingDecorator.appending + with;
             decoratorsList = appendingDecorator.decoratorsList + classNameEntry;
         } else {
             decoratorsList = appendingDecorator.decoratorsList;
@@ -23,8 +23,8 @@ final class AppendingDecorator implements Decorating {
     }
 
     @Override
-    public Sendable with(Sendable sendable) {
-        return new PrefixSendable(appending, sendable);
+    public String getPart() {
+        return appending;
     }
 
     private final class PrefixSendable implements Sendable {
@@ -37,6 +37,11 @@ final class AppendingDecorator implements Decorating {
         @Override
         public String getText() {
             return text;
+        }
+
+        @Override
+        public Sendable with(Decorating app) {
+            throw new UnsupportedOperationException();
         }
     }
 }

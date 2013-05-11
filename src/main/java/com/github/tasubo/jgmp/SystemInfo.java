@@ -8,13 +8,13 @@ public final class SystemInfo implements Decorating {
         this.parametizer = parametizer;
     }
 
-    @Override
-    public Sendable with(Sendable sendable) {
-        return new CombinedSendable(parametizer).with(sendable);
-    }
-
     public static SystemInfoBuilder with() {
         return new SystemInfoBuilder();
+    }
+
+    @Override
+    public String getPart() {
+        return parametizer.getText();
     }
 
     public final static class SystemInfoBuilder {

@@ -16,7 +16,7 @@ public class GoogleEndpointIntegrationTest {
 
         App app = App.named("jGMP integration test").create();
 
-        mpClient.send(app.with(AppView.hit()));
+        mpClient.send(AppView.hit().with(app));
     }
 
     @Test
@@ -33,7 +33,7 @@ public class GoogleEndpointIntegrationTest {
                 .title("my document title")
                 .create();
 
-        mpClient.send(document.with(PageView.hit()));
+        mpClient.send(PageView.hit().with(document));
     }
 
     @Test
@@ -45,7 +45,7 @@ public class GoogleEndpointIntegrationTest {
 
         App app = App.named("jGMP integration test").create();
 
-        mpClient.send(app.with(Event.of("Test", "Integration").action("testhit")));
+        mpClient.send(Event.of("Test", "Integration").action("testhit").with(app));
     }
 
     @Test
@@ -87,6 +87,6 @@ public class GoogleEndpointIntegrationTest {
         Decorating referrer = Referrer.from("http://localhost/");
         UserTiming userTiming = Timing.user().name("test").time(4).create();
 
-        mpClient.send(referrer.with(userTiming));
+        mpClient.send(userTiming.with(referrer));
     }
 }

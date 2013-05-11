@@ -20,6 +20,11 @@ public final class Transaction implements Sendable {
         return parametizer.getText();
     }
 
+    @Override
+    public Sendable with(Decorating app) {
+        return new Combine(this).with(app);
+    }
+
     public static TransactionBuilder withId(String transactionId) {
         Ensure.length(500, transactionId);
         Ensure.nonEmpty(transactionId);

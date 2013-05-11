@@ -20,7 +20,7 @@ public class CampaignTest {
 
         Sendable sendable = prepareSendable();
 
-        mp.send(campaign.with(sendable));
+        mp.send(sendable.with(campaign));
 
         assertThat(getRequestLog().last(), hasParam("cn").withValue("Name"));
         assertThat(getRequestLog().last(), hasParam("cs").withValue("Source"));

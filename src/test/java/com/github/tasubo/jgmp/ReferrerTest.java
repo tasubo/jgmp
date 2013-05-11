@@ -14,7 +14,7 @@ public class ReferrerTest {
 
         Referrer referrer = Referrer.from("http://example.com");
 
-        client.send(referrer.with(sendable));
+        client.send(sendable.with(referrer));
 
 
         assertThat(getRequestLog().last(), hasParam("dr").withBareValue("http%3A%2F%2Fexample.com"));
@@ -27,7 +27,7 @@ public class ReferrerTest {
 
         Referrer referrer = Referrer.from(stringWithLength(2049));
 
-        client.send(referrer.with(sendable));
+        client.send(sendable.with(referrer));
     }
 
     @Test
@@ -37,6 +37,6 @@ public class ReferrerTest {
 
         Referrer referrer = Referrer.from(stringWithLength(2048));
 
-        client.send(referrer.with(sendable));
+        client.send(sendable.with(referrer));
     }
 }

@@ -17,7 +17,7 @@ public class SessionTest {
 
         Session session = Session.start();
 
-        mp.send(session.with(sendable));
+        mp.send(sendable.with(session));
 
         assertThat(getRequestLog().last(), hasParam("sc").withValue("start"));
     }
@@ -30,7 +30,7 @@ public class SessionTest {
 
         Session session = Session.end();
 
-        mp.send(session.with(sendable));
+        mp.send(sendable.with(session));
 
         assertThat(getRequestLog().last(), hasParam("sc").withValue("end"));
     }

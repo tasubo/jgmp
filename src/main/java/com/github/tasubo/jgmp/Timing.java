@@ -3,7 +3,7 @@ package com.github.tasubo.jgmp;
 public final class Timing implements Sendable {
     private final Parametizer parametizer;
 
-    public Timing(Timing firstTiming, Timing secondTiming) {
+    private Timing(Timing firstTiming, Timing secondTiming) {
         parametizer = firstTiming.parametizer.and(secondTiming.parametizer, "t");
     }
 
@@ -18,6 +18,11 @@ public final class Timing implements Sendable {
     @Override
     public String getText() {
         return parametizer.getText();
+    }
+
+    @Override
+    public Sendable with(Decorating app) {
+        return new Combine(this).with(app);
     }
 
     public static Timing pageLoad(int time) {

@@ -15,7 +15,7 @@ public class CustomTest {
 
         Custom custom = Metric.withIndex(19).value(47);
 
-        client.send(custom.with(sendable));
+        client.send(sendable.with(custom));
 
         assertThat(getRequestLog().last(), hasParam("t").withValue("event"));
         assertThat(getRequestLog().last(), hasParam("cm19").withValue("47"));
@@ -34,7 +34,7 @@ public class CustomTest {
 
         Custom custom = Dimension.withIndex(160).value("Sports");
 
-        client.send(custom.with(sendable));
+        client.send(sendable.with(custom));
 
         assertThat(getRequestLog().last(), hasParam("t").withValue("event"));
         assertThat(getRequestLog().last(), hasParam("cd160").withValue("Sports"));

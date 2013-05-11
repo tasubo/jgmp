@@ -18,7 +18,7 @@ public class AppTest {
                 .version("1.2")
                 .create();
 
-        mp.send(app.with(sendable));
+        mp.send(sendable.with(app));
 
 
         assertThat(getRequestLog().last(), hasParam("an").withValue("My App"));

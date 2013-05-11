@@ -2,10 +2,10 @@ package com.github.tasubo.jgmp;
 
 public final class Campaign implements Decorating {
 
-    private final CombinedSendable combinedSendable;
+    private final Parametizer parametizer;
 
     private Campaign(CampaignBuilder b) {
-        combinedSendable = new CombinedSendable("cn", b.name,
+        parametizer = new Parametizer("cn", b.name,
                 "cs", b.source,
                 "cm", b.medium,
                 "ck", b.keyword,
@@ -15,8 +15,9 @@ public final class Campaign implements Decorating {
                 "dclid", b.displayAdsId);
     }
 
-    public Sendable with(Sendable sendable) {
-        return combinedSendable.with(sendable);
+    @Override
+    public String getPart() {
+        return parametizer.getText();
     }
 
     public static CampaignBuilder named(String name) {
