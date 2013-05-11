@@ -45,6 +45,20 @@ public class GeneralApiTest {
     }
 
     @Test
+    public void shouldProperlyEncodeUtf() {
+        Sendable sendable = prepareSendable();
+        MpClient mp = prepareMpClient();
+
+        Document document = Document.with()
+                .description("ąčęėįšųū90-ž%^&*")
+                .create();
+
+        mp.send(sendable.with(document));
+
+        assertThat(getRequestLog().last(), hasParam("cd").withBareValue("%C4%85%C4%8D%C4%99%C4%97%C4%AF%C5%A1%C5%B3%C5%AB90-%C5%BE%25%5E%26*"));
+    }
+
+    @Test
     public void shouldDecorateGlobalParams() {
 
         Campaign campaign = prepareCampaign();
