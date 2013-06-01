@@ -40,7 +40,14 @@ public class Mocks {
 
     public static class MockHttpRequester implements HttpRequester {
         @Override
-        public void send(String url) {
+        public void sendGet(String host, String payload) {
+            String url = host + "?" + payload;
+            REQUESTS.add(url);
+        }
+
+        @Override
+        public void sendPost(String host, String payload) {
+            String url = host + "?" + payload;
             REQUESTS.add(url);
         }
     }

@@ -1,23 +1,40 @@
 package com.github.tasubo.jgmp;
 
+import org.hamcrest.Matcher;
 import org.junit.Test;
-import org.mutabilitydetector.unittesting.MutabilityMatchers;
+import org.mutabilitydetector.MutableReasonDetail;
 
-import static org.junit.Assert.assertThat;
-import static org.mutabilitydetector.unittesting.AllowedReason.*;
-import static org.mutabilitydetector.unittesting.MutabilityAssert.*;
-import static org.mutabilitydetector.unittesting.MutabilityMatchers.*;
+import static org.mutabilitydetector.unittesting.AllowedReason.provided;
+import static org.mutabilitydetector.unittesting.MutabilityAssert.assertImmutable;
+import static org.mutabilitydetector.unittesting.MutabilityAssert.assertInstancesOf;
+import static org.mutabilitydetector.unittesting.MutabilityMatchers.areImmutable;
 
 public class MutabilityTest {
     @Test
     public void clientShouldBeImmutable() {
         assertImmutable(AppendingDecorator.class);
+        Matcher<MutableReasonDetail> alsoImmutable
+                = provided(
+                HttpRequester.class, MpClient.Prefix.class,
+                MpClient.Sender.class, Decorating.class
+        ).isAlsoImmutable();
         assertInstancesOf(MpClient.class,
                 areImmutable(),
-                provided(HttpRequester.class).isAlsoImmutable());
+                alsoImmutable);
+    }
+
+    @Test
+    public void clientBuilderShouldBeImmutable() {
+        Matcher<MutableReasonDetail> alsoImmutable
+                = provided(
+                HttpRequester.class, MpClient.Prefix.class,
+                MpClient.Sender.class, MpClient.Sender.GET.class,
+                Decorating.class
+        ).isAlsoImmutable();
+
         assertInstancesOf(MpClient.MpClientBuilder.class,
                 areImmutable(),
-                provided(HttpRequester.class).isAlsoImmutable());
+                alsoImmutable);
     }
 
     @Test

@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import static com.github.tasubo.jgmp.MpAssert.*;
 import static com.github.tasubo.jgmp.Mocks.*;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
 public class CacheBusterTest {
@@ -30,6 +31,23 @@ public class CacheBusterTest {
         assertThat(getRequestLog().last(), param("z").isPresent());
         assertThat(getRequestLog().last(), param("z").isLast());
         assertThat(getRequestLog().tenLast(), params("z").allDiffer());
+    }
+
+    @Test
+    public void shouldNotUseCacheBusterWhenTurnedOff() {
+        MpClient client = MpClient.withTrackingId("TRACKING")
+                .withClientId("35009a79-1a05-49d7-b876-2b884d0f825b")
+                .withCacheBuster()
+                .noCacheBuster()
+                .httpRequester(new MockHttpRequester())
+                .create();
+
+        Sendable sendable = prepareSendable();
+
+        client.send(sendable);
+        client.send(sendable);
+
+        assertThat(getRequestLog().last(), not(param("z").isPresent()));
     }
 
 }

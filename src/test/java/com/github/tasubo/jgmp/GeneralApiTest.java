@@ -1,34 +1,100 @@
 package com.github.tasubo.jgmp;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import static com.github.tasubo.jgmp.Mocks.*;
 import static com.github.tasubo.jgmp.MpAssert.hasParam;
 import static com.github.tasubo.jgmp.MpAssert.param;
 import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.*;
 
 public class GeneralApiTest {
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
 
     @Test
     public void shouldGetClient() {
         MpClient mp = MpClient.withTrackingId("UA-XXXX-Y")
                 .withClientId("35009a79-1a05-49d7-b876-2b884d0f825b")
                 .withCacheBuster()
+                .noCacheBuster()
                 .anonymizingIp()
+                .noAnonymizingIp()
+                .usePost()
+                .useSsl()
+                .usePlainHttp()
+                .useGet()
                 .create();
 
         assertThat(mp, notNullValue());
     }
+
+    @Test
+    public void shouldUseSsl() {
+        Sendable sendable = prepareSendable();
+        MpClient mp = MpClient.withTrackingId("UA-XXXX-Y")
+                .withClientId("35009a79-1a05-49d7-b876-2b884d0f825b")
+                .httpRequester(new MockHttpRequester())
+                .useSsl()
+                .create();
+
+        mp.send(sendable);
+
+        assertThat(getRequestLog().last(), startsWith("https://www.google-analytics.com/collect?"));
+    }
+
+    @Test
+    public void shouldUsePlainOnRevert() {
+        Sendable sendable = prepareSendable();
+        MpClient mp = MpClient.withTrackingId("UA-XXXX-Y")
+                .withClientId("35009a79-1a05-49d7-b876-2b884d0f825b")
+                .httpRequester(new MockHttpRequester())
+                .useSsl()
+                .usePlainHttp()
+                .create();
+
+        mp.send(sendable);
+
+        assertThat(getRequestLog().last(), startsWith("http://www.google-analytics.com/collect?"));
+    }
+
+    @Test
+    public void shouldBeAbleToUsePost() {
+
+        HttpRequester requester = mock(HttpRequester.class);
+
+        Sendable sendable = prepareSendable();
+        MpClient mp = MpClient.withTrackingId("UA-XXXX-Y")
+                .withClientId("35009a79-1a05-49d7-b876-2b884d0f825b")
+                .httpRequester(requester)
+                .usePost()
+                .create();
+
+        mp.send(sendable);
+
+        verify(requester).sendPost(anyString(), anyString());
+    }
+
+    @Test
+    public void shouldUseGetAfterChangingItBackAfterPost() {
+
+        HttpRequester requester = mock(HttpRequester.class);
+
+        Sendable sendable = prepareSendable();
+        MpClient mp = MpClient.withTrackingId("UA-XXXX-Y")
+                .withClientId("35009a79-1a05-49d7-b876-2b884d0f825b")
+                .httpRequester(requester)
+                .usePost()
+                .useGet()
+                .create();
+
+        mp.send(sendable);
+
+        verify(requester).sendGet(anyString(), anyString());
+        verify(requester, never()).sendPost(anyString(), anyString());
+    }
+
 
     @Test
     public void shouldSendSimpleMessage() {
@@ -110,6 +176,35 @@ public class GeneralApiTest {
         MpClient.withTrackingId("U-NN-NN")
                 .withClientId("something");
 
+    }
+
+    @Test
+    public void shouldBeAbleToAnonymizeIp() {
+        Sendable sendable = prepareSendable();
+        MpClient mp = MpClient.withTrackingId("UA-XXXX-Y")
+                .withClientId("35009a79-1a05-49d7-b876-2b884d0f825b")
+                .httpRequester(new MockHttpRequester())
+                .anonymizingIp()
+                .create();
+
+        mp.send(sendable);
+
+        assertThat(getRequestLog().last(), hasParam("aip").withValue("1"));
+    }
+
+    @Test
+    public void canTurnOffAnonymization() {
+        Sendable sendable = prepareSendable();
+        MpClient mp = MpClient.withTrackingId("UA-XXXX-Y")
+                .withClientId("35009a79-1a05-49d7-b876-2b884d0f825b")
+                .httpRequester(new MockHttpRequester())
+                .anonymizingIp()
+                .noAnonymizingIp()
+                .create();
+
+        mp.send(sendable);
+
+        assertThat(getRequestLog().last(), not(param("aip").isPresent()));
     }
 
 
