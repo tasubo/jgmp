@@ -15,7 +15,7 @@ Maven
 <dependency>
     <groupId>com.github.tasubo</groupId>
     <artifactId>jgmp</artifactId>
-    <version>1.2</version>
+    <version>1.3</version>
 </dependency>
 ```
 
@@ -100,6 +100,22 @@ Examples
         mpClient.send(userTiming.with(referrer));
 ```
 
+```java
+        MpClient mpClient = MpClient.withTrackingId("UA-40659159-1")
+                .withCacheBuster()
+                .noCacheBuster()
+                .anonymizingIp()
+                .noAnonymizingIp()
+                .usePost()
+                .useSsl()
+                .usePlainHttp()
+                .useGet()
+                .create();
+
+        App app = App.named("jGMP integration test").create();
+
+        mpClient.send(AppView.hit().with(app));
+```
 
 
 For more usage examples please see tests
