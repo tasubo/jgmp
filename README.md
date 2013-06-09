@@ -1,5 +1,6 @@
 jGMP
 ====
+[![Build Status](https://drone.io/github.com/tasubo/jgmp/status.png)](https://drone.io/github.com/tasubo/jgmp/latest)
 
 Java library for Google's Measurement Protocol
 
