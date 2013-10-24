@@ -1,12 +1,11 @@
 package com.github.tasubo.jgmp;
 
 import java.util.*;
-import java.util.concurrent.LinkedBlockingDeque;
 
 public class Mocks {
 
     private static final HttpRequester REQUESTER = new MockHttpRequester();
-    private static final Deque<String> REQUESTS = new LinkedBlockingDeque<String>();
+    private static final Deque<String> REQUESTS = new ArrayDeque<String>();
 
     public static SystemInfo prepareSystemInfo() {
         return SystemInfo.with().javaEnabled().viewport(800, 600).create();
@@ -52,32 +51,6 @@ public class Mocks {
             REQUESTS.add(url);
         }
     }
-	
-	public static class SlowMockHttpRequester implements HttpRequester {
-		        
-		@Override
-        public void sendGet(String host, String payload) {
-			sleepQuietly(50);
-			
-            String url = host + "?" + payload;
-            REQUESTS.add(url);
-        }
-
-        @Override
-        public void sendPost(String host, String payload) {
-			sleepQuietly(50);
-            String url = host + "?" + payload;
-            REQUESTS.add(url);
-        }
-
-		private void sleepQuietly(long sleepMillis) {
-			try {
-				Thread.sleep(sleepMillis);
-			} catch (InterruptedException ex) {
-				
-			}
-		}
-	}
 
     public static class RequestLog {
         public String last() {
@@ -98,9 +71,5 @@ public class Mocks {
         public void clear() {
             REQUESTS.clear();
         }
-		
-		public int size() {
-			return REQUESTS.size();
-		}
     }
 }
