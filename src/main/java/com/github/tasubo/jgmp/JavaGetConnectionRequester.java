@@ -10,7 +10,10 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-final class JavaGetConnectionRequester implements HttpRequester {
+/**
+ * a blocking implementation of HttpRequester using HttpURLConnection
+ */
+final public class JavaGetConnectionRequester implements HttpRequester {
 
     private static final Logger LOGGER = Logger.getLogger(JavaGetConnectionRequester.class.getCanonicalName());
 
