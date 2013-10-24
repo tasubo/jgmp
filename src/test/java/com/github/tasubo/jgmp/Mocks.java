@@ -5,7 +5,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 public class Mocks {
 
-    private static final HttpRequester REQUESTER = new MockHttpRequester();
+    private static final HttpRequester REQUESTER = new Mocks.MockHttpRequester();
     private static final Deque<String> REQUESTS = new LinkedBlockingDeque<String>();
 
     public static SystemInfo prepareSystemInfo() {
@@ -35,8 +35,8 @@ public class Mocks {
         return builder.toString();
     }
 
-    public static RequestLog getRequestLog() {
-        return new RequestLog();
+    public static Mocks.RequestLog getRequestLog() {
+        return new Mocks.RequestLog();
     }
 
     public static class MockHttpRequester implements HttpRequester {

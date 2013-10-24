@@ -95,11 +95,6 @@ public final class MpClient {
             MpClient client = new MpClient(this);
             return client;
         }
-		
-		public AsyncMpClient createAsyncClient(int concurrentRequests) {
-			AsyncMpClient client = new AsyncMpClient(create(), concurrentRequests);
-			return client;
-		}
 
         public MpClientBuilder using(Decorating decorating) {
             AppendingDecorator localDecorator = new AppendingDecorator(appendingDecorator, decorating);
@@ -224,5 +219,4 @@ public final class MpClient {
             return text;
         }
     }
-	
 }

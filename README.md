@@ -118,5 +118,29 @@ Examples
         mpClient.send(AppView.hit().with(app));
 ```
 
+```java
+
+		// example for asynchronous, non-blocking requests
+
+		int concurrentRequests = 10;
+
+        JavaGetConnectionRequester blockingHttpRequester = 
+				new JavaGetConnectionRequester();		
+		AsyncHttpRequester asyncHttpRequester = 
+				new AsyncHttpRequester(blockingHttpRequester, concurrentRequests);
+		
+		MpClient asyncMpClient = MpClient.withTrackingId("UA-40659159-1")
+				.withClientId(clientId)
+				.httpRequester(asyncHttpRequester)
+				.create();
+
+        App app = App.named("jGMP integration test").create();
+
+        asyncMpClient.send(AppView.hit().with(app));
+
+		// when your program shuts down you have to shutdown AsyncHttpRequester
+		asyncHttpRequester.shutdown();
+
+```
 
 For more usage examples please see tests
