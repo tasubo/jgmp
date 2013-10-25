@@ -15,7 +15,7 @@ public final class ClientID implements Decorating {
     }
 
     /**
-     * Useful to create deterministic UUIDs that are based on SHA256.
+     * Useful to create deterministic UUIDs that are based on MD5.
      *
      * @param seeds You can supply here user IP or/and User-Agent to identify them
      * @return
@@ -27,9 +27,12 @@ public final class ClientID implements Decorating {
         }
 
         String hash = hash(text);
-
-        String randomUuid = UUID.randomUUID().toString();
-        return new ClientID(randomUuid);
+        String result = hash.substring(0, 8)
+                + "-" + hash.substring(8, 12)
+                + "-" + hash.substring(12, 16)
+                + "-" + hash.substring(16, 20)
+                + "-" + hash.substring(20, 32);
+        return new ClientID(result);
     }
 
     public static ClientID random() {
@@ -51,7 +54,7 @@ public final class ClientID implements Decorating {
     private static String hash(String string) {
         MessageDigest md;
         try {
-            md = MessageDigest.getInstance("SHA-256");
+            md = MessageDigest.getInstance("MD5");
             String text = string;
 
             md.update(text.getBytes("UTF-8"));
