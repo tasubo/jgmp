@@ -20,7 +20,8 @@ final class Combine {
 
         @Override
         public String getText() {
-            return text + string;
+            Parametizer and = new Parametizer(true, text).and(new Parametizer(true, string));
+            return and.getText();
         }
 
         @Override

@@ -1,5 +1,6 @@
 package com.github.tasubo.jgmp;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static com.github.tasubo.jgmp.Mocks.*;
@@ -8,6 +9,11 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 public class EventTest {
+
+    @Before
+    public void clearRequestLog() {
+        getRequestLog().clear();
+    }
 
     @Test
     public void shouldSendEvent() {

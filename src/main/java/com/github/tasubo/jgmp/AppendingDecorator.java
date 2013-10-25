@@ -26,22 +26,4 @@ final class AppendingDecorator implements Decorating {
     public String getPart() {
         return appending;
     }
-
-    private final class PrefixSendable implements Sendable {
-        private final String text;
-
-        public PrefixSendable(String appending, Sendable sendable) {
-            text = appending + sendable.getText();
-        }
-
-        @Override
-        public String getText() {
-            return text;
-        }
-
-        @Override
-        public Sendable with(Decorating app) {
-            throw new UnsupportedOperationException();
-        }
-    }
 }

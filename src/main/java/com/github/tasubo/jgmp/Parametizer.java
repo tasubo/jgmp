@@ -3,7 +3,7 @@ package com.github.tasubo.jgmp;
 final class Parametizer {
     private final String paramValue;
 
-    private Parametizer(String string) {
+    public Parametizer(boolean mock, String string) {
         paramValue = string;
     }
 
@@ -35,10 +35,11 @@ final class Parametizer {
         String localParams = this.getText();
         String foreignParams = parametizer.getText();
 
-        String[] pairs = foreignParams.substring(1).split("&");
-        if (pairs.length % 2 != 0) {
-            throw new IllegalArgumentException("All params should have values");
+        if (foreignParams.isEmpty()) {
+            return this;
         }
+
+        String[] pairs = foreignParams.substring(1).split("&");
 
         StringBuilder builder = new StringBuilder();
 
@@ -52,7 +53,8 @@ final class Parametizer {
             }
 
             if (localParams.contains(paramName)) {
-                throw new IllegalArgumentException("Cannot join same params - revisit parts you are combining");
+                throw new IllegalArgumentException("Cannot override parameters - please check your Builder and Sendables" +
+                        " history and make sure you aren't specifying same parameters second time");
             }
 
             builder.append("&")
@@ -62,7 +64,7 @@ final class Parametizer {
 
         }
 
-        return new Parametizer(localParams + builder.toString());
+        return new Parametizer(true, localParams + builder.toString());
     }
 
     private boolean isInSkipList(String paramName, String[] paramsToSkip) {

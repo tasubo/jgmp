@@ -21,7 +21,6 @@ public class AsyncHttpRequesterTest {
 	
 	@Before
 	public void clearRequestLog() {
-
 		getRequestLog().clear();
 	}
 

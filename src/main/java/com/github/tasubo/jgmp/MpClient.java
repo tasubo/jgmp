@@ -5,7 +5,7 @@ import java.util.Random;
 
 public final class MpClient {
     private final String trackingId;
-    private final String clientId;
+    private final Decorating clientId;
     private final Decorating cacheBuster;
     private final Decorating anonymizingIp;
     private final AppendingDecorator appendingDecorator;
@@ -14,44 +14,33 @@ public final class MpClient {
 
     public MpClient(MpClientBuilder b) {
         this.trackingId = b.trackingId;
+        this.clientId = b.clientId;
         this.anonymizingIp = b.anonymizingIp;
         this.cacheBuster = b.cacheBuster;
-        this.clientId = b.clientId;
         this.appendingDecorator = b.appendingDecorator;
         this.sender = b.sender;
         this.prefix = b.prefix;
     }
 
-    public static MpClientBuilderStart withTrackingId(String trackingId) {
-        return new MpClientBuilderStart(trackingId);
+    public static MpClientBuilder withTrackingId(String trackingId) {
+        return new MpClientBuilder(trackingId);
     }
 
     public void send(Sendable sendable) {
+        sendable = sendable.with(clientId);
         sendable = sendable.with(anonymizingIp);
         sendable = sendable.with(cacheBuster);
-        Parametizer parametizer = new Parametizer("tid", trackingId, "cid", clientId);
+
+        Parametizer parametizer = new Parametizer("tid", trackingId);
         Sendable with = sendable.with(appendingDecorator);
         String host = prefix.get() + "www.google-analytics.com/collect";
         String payload = "v=1" + parametizer.getText() + with.getText();
         sender.send(host, payload);
     }
 
-    public static final class MpClientBuilderStart {
-        private final String trackingId;
-
-        private MpClientBuilderStart(String trackingId) {
-            this.trackingId = trackingId;
-        }
-
-        public MpClientBuilder withClientId(String clientId) {
-            Ensure.isUuid(clientId);
-            return new MpClientBuilder(trackingId, clientId);
-        }
-    }
-
     public static final class MpClientBuilder {
         private final String trackingId;
-        private final String clientId;
+        private final Decorating clientId;
         private final AppendingDecorator appendingDecorator;
         private final HttpRequester httpRequester;
         private final Decorating cacheBuster;
@@ -59,7 +48,11 @@ public final class MpClient {
         private final Sender sender;
         private final Prefix prefix;
 
-        public MpClientBuilder(String trackingId, String clientId) {
+        public MpClientBuilder(String trackingId) {
+            this(trackingId, new AppendingDecorator());
+        }
+
+        public MpClientBuilder(String trackingId, AppendingDecorator clientId) {
             this.trackingId = trackingId;
             this.clientId = clientId;
             this.appendingDecorator = new AppendingDecorator();
@@ -70,7 +63,7 @@ public final class MpClient {
             this.prefix = new Prefix.PLAIN();
         }
 
-        public MpClientBuilder(String trackingId, String clientId, AppendingDecorator appendingDecorator,
+        public MpClientBuilder(String trackingId, Decorating clientId, AppendingDecorator appendingDecorator,
                                HttpRequester httpRequester, Decorating cacheBuster, Decorating anonymizingIp,
                                Sender sender, Prefix prefix) {
             this.trackingId = trackingId;
@@ -108,6 +101,12 @@ public final class MpClient {
 
         public MpClientBuilder noCacheBuster() {
             return new MpClientBuilder(trackingId, clientId, appendingDecorator, httpRequester, new NullDecorating(), anonymizingIp, sender, prefix);
+        }
+
+        public MpClientBuilder withClientId(String clientId) {
+            ClientID clientID = ClientID.fromString(clientId);
+            return new MpClientBuilder(trackingId, clientID, appendingDecorator, httpRequester, cacheBuster, anonymizingIp, sender, prefix);
+
         }
 
         public MpClientBuilder noAnonymizingIp() {
