@@ -13,6 +13,10 @@ public class MpAssert {
     public static HasParamMatcher hasParam(String v) {
         return new HasParamMatcher(v);
     }
+	
+    public static NoParamMatcher hasNoParam(String v) {
+        return new NoParamMatcher(v);
+    }
 
     static class HasParamMatcher extends BaseMatcher<String> {
 
@@ -41,6 +45,28 @@ public class MpAssert {
 
         public Matcher<? super String> withBareValue(String value) {
             return new HasParamValueMatcher(param, value, true);
+        }
+    }
+	
+	    static class NoParamMatcher extends BaseMatcher<String> {
+
+        private final String param;
+
+        public NoParamMatcher(String value) {
+            this.param = value;
+        }
+
+        @Override
+        public boolean matches(Object item) {
+            if (param.equals("v")) {
+                return item.toString().indexOf("?v") == -1;
+            }
+            return item.toString().indexOf("&" + param) == -1;
+        }
+
+        @Override
+        public void describeTo(Description description) {
+            description.appendText("no parameter \"" + param + "\" present");
         }
     }
 
