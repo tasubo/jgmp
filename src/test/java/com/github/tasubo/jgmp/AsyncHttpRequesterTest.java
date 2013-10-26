@@ -3,6 +3,9 @@ package com.github.tasubo.jgmp;
 import org.junit.Test;
 
 import static com.github.tasubo.jgmp.Mocks.*;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.mockito.Mock;
@@ -59,8 +62,8 @@ public class AsyncHttpRequesterTest {
 		 */
 		Thread.sleep(70);
 
-		assertTrue("main thread was blocked for more than 10*10 milliseconds, but requests should have been executed asynchronously", mainThreadDuration <= 20);
-		assertEquals(10, getRequestLog().size());
+		assertThat("main thread was blocked for more than 10*10 milliseconds, but requests should have been executed asynchronously", mainThreadDuration, lessThan(20L));
+        assertThat(getRequestLog().size(), is(10));
 	}
 	
 	@Test
