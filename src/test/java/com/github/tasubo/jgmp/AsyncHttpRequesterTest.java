@@ -57,7 +57,7 @@ public class AsyncHttpRequesterTest {
 		 * giving worker threads time to complete so we can check
 		 * if requests were performed
 		 */
-		Thread.sleep(100);
+		Thread.sleep(70);
 
 		assertTrue("main thread was blocked for more than 10*10 milliseconds, but requests should have been executed asynchronously", mainThreadDuration <= 20);
 		assertEquals(10, getRequestLog().size());
