@@ -24,20 +24,22 @@ Examples
 ------
 ```java
         MpClient mpClient = MpClient.withTrackingId("UA-40659159-1")
-                .withClientId(clientId)
                 .withCacheBuster()
                 .create();
 
         App app = App.named("jGMP integration test").create();
 
-        mpClient.send(AppView.hit().with(app));
+        ClientID clientID = ClientID.seeded("192.168.0.1", "MyString");
+
+        mpClient.send(AppView.hit().with(app).with(clientId));
 ```
 
 ```java
         MpClient mpClient = MpClient.withTrackingId("UA-40659159-1")
-                .withClientId(clientId)
                 .withCacheBuster()
                 .create();
+
+        ClientID clientID = ClientID.seeded("my_cookie=789");
 
         Document document = Document.with()
                 .description("long document")
@@ -46,7 +48,7 @@ Examples
                 .title("my document title")
                 .create();
 
-        mpClient.send(PageView.hit().with(document));
+        mpClient.send(PageView.hit().with(document).with(clientID));
 ```
 
 ```java
