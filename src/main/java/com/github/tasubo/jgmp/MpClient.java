@@ -35,6 +35,12 @@ public final class MpClient {
         Sendable with = sendable.with(appendingDecorator);
         String host = prefix.get() + "www.google-analytics.com/collect";
         String payload = "v=1" + parametizer.getText() + with.getText();
+
+        if (!payload.contains("&cid=")) {
+            throw new IllegalArgumentException("You haven't specified anywhere ClientID. Please set it in MpClient or" +
+                    " on Sendable using 'with'");
+        }
+
         sender.send(host, payload);
     }
 

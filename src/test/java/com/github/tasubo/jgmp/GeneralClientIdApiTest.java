@@ -55,4 +55,13 @@ public class GeneralClientIdApiTest {
         mp.send(sendable.with(clientId));
 
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldFailWhenTryingToSendMessageWithEmptyClientId() {
+        Sendable sendable = prepareSendable();
+
+        MpClient mp = prepareMpClientWithoutClientID();
+
+        mp.send(sendable);
+    }
 }
