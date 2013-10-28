@@ -2,6 +2,7 @@ package com.github.tasubo.jgmp;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,7 +21,13 @@ public final class AsyncHttpRequester implements HttpRequester {
 		this.executorService = Executors.newFixedThreadPool(concurrentRequests);
 	}
 	
-	public void shutdown() {
+	public void shutdownGracefully(long terminationTimeout) throws InterruptedException {
+		
+		executorService.shutdown();
+		executorService.awaitTermination(terminationTimeout, TimeUnit.MILLISECONDS);
+	}
+	
+	public void shutdownNow() {
 		
 		executorService.shutdownNow();
 	}

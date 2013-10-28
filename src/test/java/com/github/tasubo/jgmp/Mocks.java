@@ -17,7 +17,7 @@ public class Mocks {
     }
 
     public static Sendable prepareSendable() {
-        return Event.of("Category", "Label").action("Action");
+        return Event.ofCategory("Category").withAction("Action").labeled("Label").create();
     }
 
     public static MpClient prepareMpClient() {
