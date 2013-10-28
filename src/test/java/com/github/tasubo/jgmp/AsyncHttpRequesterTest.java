@@ -27,43 +27,48 @@ public class AsyncHttpRequesterTest {
 		getRequestLog().clear();
 	}
 
-	@Test
+	@Test(timeout = 1000)
 	public void shouldNotBlockMainThread() throws InterruptedException {
 		
-		/*
+			/*
 		 * each http request takes 50 milliseconds
 		 */
 		final SlowMockHttpRequester slowMockHttpRequester = new SlowMockHttpRequester();
-		
 		final AsyncHttpRequester asyncHttpRequester = new AsyncHttpRequester(slowMockHttpRequester, 10);
+		
+		try {
 
-		MpClient client = MpClient.withTrackingId("UA-XXXX-Y")
-				.withClientId("35009a79-1a05-49d7-b876-2b884d0f825b")
-				.httpRequester(asyncHttpRequester)
-				.create();
 
-		long startTime = System.currentTimeMillis();
+			MpClient client = MpClient.withTrackingId("UA-XXXX-Y")
+					.withClientId("35009a79-1a05-49d7-b876-2b884d0f825b")
+					.httpRequester(asyncHttpRequester)
+					.create();
 
-		for (int i = 0; i < 10; i++) {
+			long startTime = System.currentTimeMillis();
 
-			Social social = Social.fromNetwork("facebook")
-					.action("like")
-					.target("http://foo.com");
+			for (int i = 0; i < 10; i++) {
 
-			client.send(social);
+				Social social = Social.fromNetwork("facebook")
+						.action("like")
+						.target("http://foo.com");
+
+				client.send(social);
+			}
+
+			long endTime = System.currentTimeMillis();
+			long mainThreadDuration = endTime - startTime;
+
+			/*
+			 * giving worker threads time to complete so we can check
+			 * if requests were performed
+			 */
+			asyncHttpRequester.shutdownGracefully(1000);
+
+			assertThat("main thread was blocked for more than 10*10 milliseconds, but requests should have been executed asynchronously", mainThreadDuration, lessThan(20L));
+			assertThat(getRequestLog().size(), is(10));
+		} finally {
+			asyncHttpRequester.shutdownNow();
 		}
-
-		long endTime = System.currentTimeMillis();
-		long mainThreadDuration = endTime - startTime;
-
-		/*
-		 * giving worker threads time to complete so we can check
-		 * if requests were performed
-		 */
-		Thread.sleep(70);
-
-		assertThat("main thread was blocked for more than 10*10 milliseconds, but requests should have been executed asynchronously", mainThreadDuration, lessThan(20L));
-        assertThat(getRequestLog().size(), is(10));
 	}
 	
 	@Test
