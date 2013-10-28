@@ -27,6 +27,12 @@ public class Mocks {
                 .create();
     }
 
+    public static MpClient prepareMpClientWithoutClientID() {
+        return MpClient.withTrackingId("UA-XXXX-Y")
+                .httpRequester(REQUESTER)
+                .create();
+    }
+
     public static String stringWithLength(int length) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < length; i++) {

@@ -1,5 +1,6 @@
 package com.github.tasubo.jgmp;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static com.github.tasubo.jgmp.Mocks.*;
@@ -12,6 +13,11 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 public class GeneralApiTest {
+
+    @Before
+    public void clearRequestLog() {
+        getRequestLog().clear();
+    }
 
     @Test
     public void shouldGetClient() {
@@ -106,6 +112,7 @@ public class GeneralApiTest {
         assertThat(getRequestLog().last(), notNullValue());
         assertThat(getRequestLog().last(), startsWith("http://www.google-analytics.com/collect?"));
         assertThat(getRequestLog().last(), hasParam("v"));
+        assertThat(getRequestLog().last(), hasParam("cid").withValue("35009a79-1a05-49d7-b876-2b884d0f825b"));
         assertThat(getRequestLog().last(), hasParam("v").withValue("1"));
         assertThat(getRequestLog().last(), not(hasParam("ni")));
     }
@@ -206,6 +213,4 @@ public class GeneralApiTest {
 
         assertThat(getRequestLog().last(), not(param("aip").isPresent()));
     }
-
-
 }

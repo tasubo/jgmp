@@ -10,6 +10,7 @@ import static org.mutabilitydetector.unittesting.MutabilityAssert.assertInstance
 import static org.mutabilitydetector.unittesting.MutabilityMatchers.areImmutable;
 
 public class MutabilityTest {
+
     @Test
     public void clientShouldBeImmutable() {
         assertImmutable(AppendingDecorator.class);
