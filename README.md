@@ -59,7 +59,7 @@ Examples
 
         App app = App.named("jGMP integration test").create();
 
-        mpClient.send(Event.of("Test", "Integration").action("testhit").with(app));
+        mpClient.send(Event.ofCategory("Test").withAction("testhit").labeled("Integration").create().with(app));
 
 ```
 
