@@ -18,7 +18,7 @@ public class GoogleEndpointIntegrationTest {
 
         App app = App.named("jGMP integration test").create();
 
-        mpClient.send(AppView.hit().with(app));
+        mpClient.send(AppView.hit("test content description").with(app));
     }
 
     @Test

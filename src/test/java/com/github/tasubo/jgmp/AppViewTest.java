@@ -20,11 +20,12 @@ public class AppViewTest {
 
         MpClient client = prepareMpClient();
 
-        AppView appView = AppView.hit();
+        AppView appView = AppView.hit("testContentDescription");
 
         client.send(appView);
 
         assertThat(getRequestLog().last(), hasParam("t").withValue("appview"));
+        assertThat(getRequestLog().last(), hasParam("cd").withValue("testContentDescription"));
 
     }
 }

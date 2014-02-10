@@ -2,9 +2,11 @@ package com.github.tasubo.jgmp;
 
 public final class AppView implements Sendable {
 
-    private final Parametizer parametizer = new Parametizer("t", "appview");
+    private final Parametizer parametizer;
 
-    private AppView() {
+	
+    private AppView(final String contentDescription) {
+		this.parametizer = new Parametizer("t", "appview", "cd", contentDescription);
     }
 
     @Override
@@ -17,7 +19,7 @@ public final class AppView implements Sendable {
         return new Combine(this).with(app);
     }
 
-    public static AppView hit() {
-        return new AppView();
+    public static AppView hit(final String contentDescription) {
+        return new AppView(contentDescription);
     }
 }
