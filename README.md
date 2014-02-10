@@ -31,7 +31,7 @@ Examples
 
         ClientID clientID = ClientID.seeded("192.168.0.1", "MyString");
 
-        mpClient.send(AppView.hit("View description").with(app).with(clientId));
+        mpClient.send(AppView.hit().with(app).with(clientId));
 ```
 
 ```java
@@ -117,7 +117,7 @@ Examples
 
         App app = App.named("jGMP integration test").create();
 
-        mpClient.send(AppView.hit("View description").with(app));
+        mpClient.send(AppView.hit().with(app));
 ```
 
 ```java
@@ -138,7 +138,7 @@ Examples
 
         App app = App.named("jGMP integration test").create();
 
-        asyncMpClient.send(AppView.hit("View description").with(app));
+        asyncMpClient.send(AppView.hit().with(app));
 
 		// when your program shuts down you have to shutdown AsyncHttpRequester
 		asyncHttpRequester.shutdown();
