@@ -16,7 +16,7 @@ Maven
 <dependency>
     <groupId>com.github.tasubo</groupId>
     <artifactId>jgmp</artifactId>
-    <version>1.5</version>
+    <version>1.6</version>
 </dependency>
 ```
 
