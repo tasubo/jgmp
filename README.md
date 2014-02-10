@@ -16,7 +16,7 @@ Maven
 <dependency>
     <groupId>com.github.tasubo</groupId>
     <artifactId>jgmp</artifactId>
-    <version>1.4</version>
+    <version>1.5</version>
 </dependency>
 ```
 
@@ -59,7 +59,7 @@ Examples
 
         App app = App.named("jGMP integration test").create();
 
-        mpClient.send(Event.of("Test", "Integration").action("testhit").with(app));
+        mpClient.send(Event.ofCategory("Test").withAction("testhit").labeled("Integration").create().with(app));
 
 ```
 
