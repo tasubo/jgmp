@@ -10,13 +10,22 @@ Supports almost all features. 97% of lines covered by tests.
 
 All builders and payload messages are immutable.
 
+Notice
+-----
+While aim of this library was to reduce chance of making invalid requests
+it is still possible to make invalid requests to GA due to
+not always consistent specs. If you
+find cases where this is true, please fill an issue and we will address it.
+
+
+
 Maven
 ------
 ```xml
 <dependency>
     <groupId>com.github.tasubo</groupId>
     <artifactId>jgmp</artifactId>
-    <version>1.6</version>
+    <version>1.7</version>
 </dependency>
 ```
 
