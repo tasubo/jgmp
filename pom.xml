@@ -10,7 +10,7 @@
 
     <groupId>com.github.tasubo</groupId>
     <artifactId>jgmp</artifactId>
-    <version>1.7</version>
+    <version>1.6-SNAPSHOT</version>
 
     <packaging>jar</packaging>
 
