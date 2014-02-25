@@ -23,6 +23,9 @@ public final class ClientID implements Decorating {
     public static ClientID seeded(String... seeds) {
         String text = "";
         for (String string : seeds) {
+            if (string == null) {
+                string = "";
+            }
             text += string;
         }
 
@@ -59,13 +62,23 @@ public final class ClientID implements Decorating {
 
             md.update(text.getBytes("UTF-8"));
             byte[] digest = md.digest();
-
-            BigInteger bigInt = new BigInteger(1, digest);
-            return bigInt.toString(16);
+            
+            return toHex(digest);
         } catch (NoSuchAlgorithmException ex) {
             throw new RuntimeException(ex);
         } catch (UnsupportedEncodingException ex) {
             throw new RuntimeException(ex);
         }
+    }
+    
+    private static final char[] HEX_DIGITS = "0123456789abcdef".toCharArray();
+
+    private static String toHex(byte[] data) {
+        char[] chars = new char[data.length * 2];
+        for (int i = 0; i < data.length; i++) {
+            chars[i * 2] = HEX_DIGITS[(data[i] >> 4) & 0xf];
+            chars[i * 2 + 1] = HEX_DIGITS[data[i] & 0xf];
+        }
+        return new String(chars);
     }
 }

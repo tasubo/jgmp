@@ -14,6 +14,29 @@ public class ClientIDTest {
     public void clearRequestLog() {
         getRequestLog().clear();
     }
+    
+    @Test
+    public void clientIdShouldWorkWhenInputIsEmpty() {
+        ClientID seeded = ClientID.seeded("", "");
+        
+        assertThat(seeded.getPart(), is("&cid=d41d8cd9-8f00-b204-e980-0998ecf8427e"));
+    }
+    
+    @Test
+    public void clientIdShouldWorkWithLongUserAgentsAndProperIp() {
+       String userAgent = "Mozilla/5.0 (X11; Linux x86_64)"
+        + " AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.69 Safari/537.17";
+       String ip = "129.215.58.48";
+       
+        ClientID seeded = ClientID.seeded(ip, userAgent);
+    }
+    
+    @Test
+    public void clientIdShouldWorkOnNullInput() {
+        ClientID seeded = ClientID.seeded(null, null);
+        
+        assertThat(seeded.getPart(), is("&cid=d41d8cd9-8f00-b204-e980-0998ecf8427e"));
+    }
 
     @Test
     public void shouldCreateClientIdFromSeededValues() {
